@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Dashboard</title>
+  <title><?php echo $title ?></title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -14,11 +14,31 @@
   <link rel="stylesheet" href= <?php echo base_url('asset/bower_components/Ionicons/css/ionicons.min.css');?>>
   <!-- jvectormap -->
   <link rel="stylesheet" href= <?php echo base_url('asset/bower_components/jvectormap/jquery-jvectormap.css'); ?>>
+  <!-- data tables -->
+  <link rel="stylesheet" href= <?php echo base_url('asset/bower_components/datatables/css/dataTables.bootstrap4.min.css'); ?>>
+  <!-- daterange picker -->
+  <link rel="stylesheet" href=<?php echo base_url('asset/bower_components/bootstrap-daterangepicker/daterangepicker.css'); ?>">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href=<?php echo base_url('asset/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css'); ?>>
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href=<?php echo base_url('asset/plugins/iCheck/all.css'); ?>>
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href=<?php echo base_url('asset/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css'); ?>>
+  <!-- Bootstrap time Picker -->
+  <link rel="stylesheet" href=<?php echo base_url('asset/plugins/timepicker/bootstrap-timepicker.min.css'); ?>>
+  <!-- Select2 -->
+  <link rel="stylesheet" href=<?php echo base_url('asset/bower_components/select2/dist/css/select2.min.css'); ?>>
   <!-- Theme style -->
   <link rel="stylesheet" href= <?php echo base_url('asset/dist/css/AdminLTE.min.css'); ?>>
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href= <?php echo base_url('asset/dist/css/skins/_all-skins.min.css'); ?>>
+  <!-- fuleupload -->
+  <link type="text/css" rel="stylesheet" href="http://www.cliptheme.com/preview/admin/clip-one/assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css" />
+
+
+  <!-- jQuery 3 -->
+  <script src= <?php echo base_url('asset/bower_components/datatables/js/jquery-3.3.1.js'); ?>></script>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -391,12 +411,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Dashboard
-        <small>Version 2.0</small>
+        <?php echo $parent; ?>
+        <small><?php echo $child; ?></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
+        <li><a href="#"><i class="<?php echo $icon; ?>"></i> <?php echo $parent; ?></a></li>
+        <li class="active"><?php echo $child; ?></li>
       </ol>
     </section>
 
@@ -611,14 +631,18 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery 3 -->
-<script src= <?php echo base_url('asset/bower_components/jquery/dist/jquery.min.js'); ?>></script>
+
 <!-- Bootstrap 3.3.7 -->
 <script src= <?php echo base_url('asset/bower_components/bootstrap/dist/js/bootstrap.min.js'); ?>></script>
 <!-- FastClick -->
 <script src= <?php echo base_url('asset/bower_components/fastclick/lib/fastclick.js'); ?>></script>
 <!-- AdminLTE App -->
 <script src= <?php echo base_url('asset/dist/js/adminlte.min.js'); ?>></script>
+<!-- data tables -->
+<script src= <?php echo base_url('asset/bower_components/datatables/js/jquery.dataTables.min.js'); ?>></script>
+<script src= <?php echo base_url('asset/bower_components/datatables/js/dataTables.bootstrap4.min.js'); ?>></script>
+<!-- FastClick -->
+<script src= <?php echo base_url('asset/bower_components/fastclick/lib/fastclick.js'); ?>></script>
 <!-- Sparkline -->
 <script src= <?php echo base_url('asset/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js'); ?>></script>
 <!-- jvectormap  -->
@@ -632,5 +656,46 @@
 <script src= <?php echo base_url('asset/dist/js/pages/dashboard2.js'); ?>></script>
 <!-- AdminLTE for demo purposes -->
 <script src= <?php echo base_url('asset/dist/js/demo.js'); ?>></script>
+<!-- InputMask -->
+<script src=<?php echo base_url('asset/plugins/input-mask/jquery.inputmask.js'); ?>></script>
+<script src=<?php echo base_url('asset/plugins/input-mask/jquery.inputmask.date.extensions.js'); ?>></script>
+<script src=<?php echo base_url('asset/plugins/input-mask/jquery.inputmask.extensions.js'); ?>></script>
+<!-- iCheck 1.0.1 -->
+<script src=<?php echo base_url('asset/plugins/iCheck/icheck.min.js'); ?>></script>
+<!-- FastClick -->
+<script src=<?php echo base_url('asset/bower_components/fastclick/lib/fastclick.js'); ?>></script>
+<!-- date-range-picker -->
+<script src=<?php echo base_url('asset/bower_components/moment/min/moment.min.js'); ?>></script>
+<script src=<?php echo base_url('asset/bower_components/bootstrap-daterangepicker/daterangepicker.js'); ?>></script>
+<!-- bootstrap datepicker -->
+<script src=<?php echo base_url('asset/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'); ?>></script>
+<!-- bootstrap color picker -->
+<script src=<?php echo base_url('asset/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js'); ?>></script>
+<!-- bootstrap time picker -->
+<script src=<?php echo base_url('asset/plugins/timepicker/bootstrap-timepicker.min.js'); ?>></script>
+<!-- bootstrap fileupload -->
+<script src="http://www.cliptheme.com/preview/admin/clip-one/assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
+<!-- summernote -->
+<script src="http://www.cliptheme.com/preview/admin/clip-one/assets/plugins/summernote/build/summernote.min.js"></script>
+
+
+
+
+<script>
+  $(function () {
+    $('#example1').DataTable({
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : true,
+    })
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd-mm-yyyy')
+</script>
+
+
 </body>
 </html>

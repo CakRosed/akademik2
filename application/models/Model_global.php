@@ -5,6 +5,7 @@
  */ 
 
 class Model_global extends CI_Model{
+	
 	public function get_all_data($select, $table){
 		$this->db->select($select);
 		$this->db->from($table);

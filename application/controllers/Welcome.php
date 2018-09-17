@@ -24,6 +24,12 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->template->load('template', 'admin/dashboard');
+		$data = array(
+				'icon'  => 'fa fa-dashboard',
+				'title' => 'DASHBOARD',
+				'parent'=> 'DASHBOARD',
+				'child' => ''  
+			);
+		$this->template->load('template', 'admin/dashboard', $data);
 	}
 }
