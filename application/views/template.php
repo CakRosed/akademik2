@@ -17,7 +17,7 @@
   <!-- data tables -->
   <link rel="stylesheet" href= <?php echo base_url('asset/bower_components/datatables/css/dataTables.bootstrap4.min.css'); ?>>
   <!-- daterange picker -->
-  <link rel="stylesheet" href=<?php echo base_url('asset/bower_components/bootstrap-daterangepicker/daterangepicker.css'); ?>">
+  <link rel="stylesheet" href=<?php echo base_url('asset/bower_components/bootstrap-daterangepicker/daterangepicker.css'); ?>>
   <!-- bootstrap datepicker -->
   <link rel="stylesheet" href=<?php echo base_url('asset/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css'); ?>>
   <!-- iCheck for checkboxes and radio inputs -->
@@ -38,8 +38,8 @@
 
 
   <!-- jQuery 3 -->
-  <script src= <?php echo base_url('asset/bower_components/datatables/js/jquery-3.3.1.js'); ?>></script>
-
+  <script src=<?php echo base_url('asset/bower_components/datatables/js/jquery-3.3.1.js') ?>></script>
+  
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -61,7 +61,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg"><b>MTS</b>Annur</span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -87,7 +87,7 @@
                   <li><!-- start message -->
                     <a href="#">
                       <div class="pull-left">
-                        <img src="<?php echo base_url('asset/'); ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <img src="<?php echo base_url('upload/'); ?>avatarL.png" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Support Team
@@ -273,16 +273,16 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="<?php echo base_url('asset/'); ?>dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
+              <img src="<?php echo base_url('upload/'); ?>avatarL.png" class="user-image" alt="User Image">
+              <span class="hidden-xs">Aunur Rosidin</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="<?php echo base_url('asset/'); ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="<?php echo base_url('upload/'); ?>avatarL.png" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
+                  Aunur Rosidin - Web Developer
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>
@@ -328,10 +328,10 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<?php echo base_url('asset/'); ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="<?php echo base_url('upload/'); ?>avatarL.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p>Aunur Rosidin</p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -689,11 +689,8 @@
       'searching'   : true,
       'ordering'    : true,
       'info'        : true,
-      'autoWidth'   : true,
-    })
-
-    //Datemask dd/mm/yyyy
-    $('#datemask').inputmask('dd-mm-yyyy')
+      'autoWidth'   : true
+    });
 </script>
 
 

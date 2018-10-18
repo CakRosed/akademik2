@@ -29,7 +29,7 @@
 			if (isset($_POST['submit'])) {
 				$nisn 	= $this->input->post('nisn', TRUE);
 				$gender	= $this->input->post('gender', TRUE);
-				$check 	= $this->db->get_where('tbl_siswa', array('nisn' => $nisn))->num_rows();
+				// $check 	= $this->db->get_where('tbl_siswa', array('nisn' => $nisn))->num_rows();
 
 					#
 				// konfigurasi upload foto
@@ -58,42 +58,62 @@
 				// lakukan fungsi simpan data ke databse
 
 				// $$this->db->get_where('tbl_siswa');
-				$param = array(
-					'nisn'			=> $this->db->escape($this->input->post('nisn', TRUE)),
-					'nis'		 	=> $this->db->escape($this->input->post('nis', TRUE)),
-					'nama'			=> $this->db->escape(strtoupper($this->input->post('nama', TRUE))),
-					'tempat_lahir' 	=> $this->db->escape(strtoupper($this->input->post('tempat_lahir', TRUE))),
-					'tanggal_lahir'	=> $this->input->post('tanggal_lahir', TRUE),
-					'nama_wali'		=> $this->db->escape(strtoupper($this->input->post('nama_wali', TRUE))),
-					'hp_wali'		=> $this->db->escape($this->input->post('hp_wali', TRUE)),
+
+					$param = array(
+					'nisn'			=> strip_tags(trim($this->input->post('nisn', TRUE))),
+					'nis'		 	=> strip_tags(trim($this->input->post('nis', TRUE))),
+					'nama'			=> strip_tags(trim(strtoupper($this->input->post('nama', TRUE)))),
+					'tempat_lahir' 	=> strip_tags(trim(strtoupper($this->input->post('tempat_lahir', TRUE)))),
+					'tanggal_lahir'	=> strip_tags(trim($this->input->post('tanggal_lahir', TRUE))),
+					'nama_wali'		=> strip_tags(trim(strtoupper($this->input->post('nama_wali', TRUE)))),
+					'hp_wali'		=> strip_tags(trim($this->input->post('hp_wali', TRUE))),
 					'gender' 		=> $this->input->post('gender', TRUE),
 					'kd_agama' 		=> $this->input->post('agama', TRUE),
-					'alamat' 		=> $this->db->escape($this->input->post('alamat', TRUE)),
+					'alamat' 		=> strip_tags(trim($this->input->post('alamat', TRUE))),
 					'password'		=> 'anonymouse135',
 					'foto'			=> $fotodb.$upload['file_ext']			 
 				);
 
-
-				$this->input->post($param, TRUE);
-
 				// print_r($param);
-	   			// die;
+	   // 			die;
 	            //Parameter pertama adalah data yang ingin di simpan
 	            //Parameter kedua adalah nama tabel
-
 				$simpan = $this->model->save_data($param, 'tbl_siswa');
+					if ($simpan) {
+						echo "<script>alert('Berhasil Menambah Data<i class='fa fa-check'></i>')</script>";
+						redirect('siswa');
+					}else{
+						echo "<script>alert('Gagal Menambah Data<i class='fa fa-cross'></i>')</script>";
+					}
 
-				if ($simpan) {
-					echo "<script>alert('Berhasil Menambah Data<i class='fa fa-check'></i>')</script>";
-					redirect('siswa');
-				}else{
-					echo "<script>alert('Gagal Menambah Data<i class='fa fa-cross'></i>')</script>";
-					redirect('siswa/add');
-				}
 			}
 			$this->template->load('template', 'siswa/add', $data);
 		}
 		// end add
 
+
+		// start edit
+		public function edit(){
+			$data = array(
+				'icon'  => 'fa fa-users',
+				'title' => 'INPUT SISWA',
+				'parent'=> 'SISWA',
+				'child' => 'EDIT'  
+			);
+			$this->template->load('template', 'siswa/edit', $data);
+		}
+		// end edit
+
+		// start profile
+		public function profile(){
+			$data = array(
+				'icon'  => 'fa fa-users',
+				'title' => 'INPUT SISWA',
+				'parent'=> 'SISWA',
+				'child' => 'EDIT'  
+			);
+			$this->template->load('template', 'siswa/profile', $data);
+		}
+		// end profile
 	}
 

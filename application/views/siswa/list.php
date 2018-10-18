@@ -14,9 +14,8 @@
                     <th class="text-center">NO</th>
                     <th class="text-center">FOTO</th>
                     <th class="text-center">NISN</th>
+                    <th class="text-center">NIS</th>
                     <th class="text-center">NAMA</th>
-                    <th class="text-center">TEMPAT LAHIR</th>
-                    <th class="text-center">TANGGAL LAHIR</th>
                     <th class="text-center">JK</th>
                     <th class="text-center">MENU</th>
                   </tr>
@@ -31,9 +30,8 @@
                         <img class="img-circle" src="<?php echo base_url('upload/siswa/'); echo $row->foto; ?>" width="35px;">
                       </td>
                       <td class="text-center"><?php echo $row->nisn; ?></td>
+                      <td class="text-center"><?php echo $row->nis; ?></td>
                       <td><?php echo $row->nama; ?></td>
-                      <td><?php echo $row->tempat_lahir; ?></td>
-                      <td class="text-center"><?php echo $row->tanggal_lahir; ?></td>
                       <td class="text-center"><?php echo $row->gender; ?></td>
                       <td class="text-center">
                         <a class="btn btn-xs btn-info tooltips btn-flat" data placement="top" data-original-title="detail" href="<?php echo site_url('siswa/detail/'.$row->nisn); ?>"><i class="fa fa-eye"></i></a>
