@@ -14,7 +14,7 @@ class Model_global extends CI_Model{
 	} //end class get_all_data
 
 	public function get_data($select, $table, $where){
-		$this->db->select($selct);
+		$this->db->select($select);
 		$this->db->from($table);
 		$this->db->where($where);
 		$query = $this->db->get();

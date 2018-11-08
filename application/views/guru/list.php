@@ -8,7 +8,7 @@
             <div class="box-body">
               
 
-              <table id="mytable" class="table table-striped table-bordered" style="width:100%">
+              <table id="example1" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                   <tr>
                     <th class="text-center">NO</th>
@@ -28,13 +28,13 @@
                       <td class="text-center">
                         <img class="img-circle" src="<?php echo base_url('upload/guru/'); echo $row->foto; ?>" width="35px;">
                       </td>
-                      <td><?php echo $row->nuptk; ?></td>
+                      <td class="text-center"><?php echo $row->nuptk; ?></td>
                       <td><?php echo $row->nama_guru; ?></td>
                       <td class="text-center"><?php echo $row->gender; ?></td>
                       <td class="text-center">
-                        <a class="btn btn-xs btn-info tooltips btn-flat" data placement="top" data-original-title="detail" href="<?php echo site_url('siswa/detail/'.$row->id_guru); ?>"><i class="fa fa-eye"></i></a>
-                        <a class="btn btn-xs btn-warning tooltips btn-flat" data placement="top" data-original-title="edit" href="<?php echo site_url('siswa/edit/'.$row->id_guru); ?>"><i class="fa fa-pencil-square-o"></i></a>
-                        <a class="btn btn-xs btn-danger tooltips btn-flat" data placement="top" data-original-title="delete" href="<?php echo site_url('siswa/delete/'.$row->id_guru); ?>" title="Hapus Data" onclick = "return confirm('ANDA YAKIN INGIN MENHAPUS DATA INI?')"><i class="fa fa-trash"></i></a>
+                        <a class="btn btn-xs btn-info tooltips btn-flat" data placement="top" data-original-title="detail" href="<?php echo site_url('guru/detail/'.$row->nuptk); ?>"><i class="fa fa-eye"></i></a>
+                        <a class="btn btn-xs btn-warning tooltips btn-flat" data placement="top" data-original-title="edit" href="<?php echo site_url('guru/edit/'.$row->nuptk); ?>"><i class="fa fa-pencil-square-o"></i></a>
+                        <a class="btn btn-xs btn-danger tooltips btn-flat" data placement="top" data-original-title="delete" href="<?php echo site_url('guru/delete/'.$row->nuptk); ?>" title="Hapus Data" onclick = "return confirm('ANDA YAKIN INGIN MENHAPUS DATA INI?')"><i class="fa fa-trash"></i></a>
                       </td>
                     </tr>
                   <?php endforeach; ?>

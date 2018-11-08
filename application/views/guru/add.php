@@ -31,7 +31,7 @@
                       <i class="fa fa-id-card-o"></i>
                     </div>
                     <?php echo form_input(array(
-                      'type'          =>'text', 
+                      'type'          =>'number', 
                       'placeholder'   =>'ex. 0015067888', 
                       'name'          =>'nuptk', 
                       'id'            =>'nuptk', 
@@ -122,11 +122,11 @@
 
                 <div class="input-group">
                   <div class="input-group-addon">
-                    <i class="fa fa-user"></i>
+                    <i class="fa fa-mobile"></i>
                   </div>
                   <?php echo form_input(array(
-                    'type'        =>'text', 
-                    'placeholder' =>'ex. SUPARMAN', 
+                    'type'        =>'number', 
+                    'placeholder' =>'ex. 0895804266260', 
                     'name'        =>'nomor', 
                     'id'          =>'nomor', 
                     'class'       =>'form-control', 
@@ -145,11 +145,11 @@
 
                 <div class="input-group">
                   <div class="input-group-addon">
-                    <i class="fa fa-mobile"></i>
+                    <i class="fa fa-envelope"></i>
                   </div>
                   <?php echo form_input(array(
                     'type'        =>'email', 
-                    'placeholder' =>'ex. 089580446626', 
+                    'placeholder' =>'ex. aunur.rosidin@gmail.com', 
                     'name'        =>'email', 
                     'id'          =>'email', 
                     'class'       =>'form-control', 
@@ -163,13 +163,13 @@
 
               <div class="form-group">
                 <label>PENDIDIKAN TERAKHIR</label>
-                <select name="pendidikan" class="form-control select2" style="width: 100%;">
-                  <option selected="selected">Select..</option>
-                  <option value="01L">SMA/SMK</option>
-                  <option value="02">S1</option>
-                  <option value="03">S2</option>
-                  <option value="04">S3</option>
-                </select>
+                <?php echo form_dropdown('pendidikan terakhir',
+                  array(
+                    '01' => 'SMA Sedrajat',
+                    '02' => 'S1',
+                    '03' => 'S2',
+                    '04' => 'S3'
+                  ), null, 'class="form-control"'); ?>                
               </div>
               <!-- /.form-group -->
             </div>
@@ -179,25 +179,16 @@
 
                <div class="form-group">
                 <label>JENIS KELAMIN</label>
-                <select name="gender" class="form-control select2" style="width: 100%;">
-                  <option selected="selected">Select..</option>
-                  <option value="L">LAKI-LAKI</option>
-                  <option value="P">PEREMPUAN</option>
-                </select>
+                <?php echo form_dropdown('gender', 
+                array(
+                  'L'=>'LAKI-LAKI', 
+                  'P'=>'PEREMPUAN'), null, 'class="form-control"'); ?>
               </div>
               <!-- /.form-group -->
 
               <div class="form-group">
                 <label>AGAMA</label>
-                <select name="agama" class="form-control select2" style="width: 100%;">
-                  <option selected="selected">Select..</option>
-                  <option value="01">ISLAM</option>
-                  <option value="02">KRISTEN</option>
-                  <option value="03">KATHOLIK</option>
-                  <option value="04">HINDU</option>
-                  <option value="05">BUDHA</option>
-                  <option value="06">KONGHUCU</option>
-                </select>
+                <?php echo cmb_dinamis('agama', 'tbl_agama', 'nama_agama', 'kd_agama'); ?>
               </div>
               <!-- /.form-group -->
 
@@ -216,8 +207,7 @@
                     'class'       =>'form-control',
                     'style'       =>'margin:0px 74.5px 0px 0px; height: 75px; width: 485px',
                     'row'         =>'3', 
-                    'value'       => set_value('alamat'),
-                    'date-mask' 
+                    'value'       => set_value('alamat')
                     )); 
                   ?>
                </div>

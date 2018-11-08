@@ -3,14 +3,15 @@
 <!-- SELECT2 EXAMPLE -->
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">INPUT DATA SISWA</h3>
+          <h3 class="box-title">EDIT DATA GURU</h3>
 
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
           </div>
         </div>
-
+      
+        <?php echo validation_errors(); ?>
       
         <!-- /.box-header -->
         <div class="box-body">
@@ -18,25 +19,27 @@
             <div class="col-md-6">
             
               <?php 
-                echo form_open_multipart('siswa/add', 'role="from"');
+                echo form_open_multipart('guru/add', 'role="from"');
+                echo form_hidden('nuptk', $guru->nuptk);
                ?>
 
                 <!-- nisn -->
                 <div class="form-group">
-                  <label>NISN</label>
+                  <label>NUPTK</label>
 
                   <div class="input-group">
                     <div class="input-group-addon">
                       <i class="fa fa-id-card-o"></i>
                     </div>
                     <?php echo form_input(array(
-                      'type'          =>'text', 
+                      'type'          =>'number', 
                       'placeholder'   =>'ex. 0015067888', 
-                      'name'          =>'nisn', 
-                      'id'            =>'nisn', 
+                      'name'          =>'nuptk', 
+                      'id'            =>'nuptk', 
                       'class'         =>'form-control', 
                       'required'      =>'required', 
-                      'value'         => set_value('nisn') 
+                      'value'         => $guru->nuptk,
+                      'redonly'      => 'readonly' 
                       )); 
                     ?>
                   </div>
@@ -44,32 +47,9 @@
                 </div>
                 <!-- /.form group -->
 
-              <!-- nis -->
+              <!-- nama  -->
               <div class="form-group">
-                <label>NIS</label>
-
-                <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-id-card"></i>
-                  </div>
-                  <?php echo form_input(array(
-                    'type'        =>'text', 
-                    'placeholder' =>'ex. 0000007888', 
-                    'name'        =>'nis', 
-                    'id'          =>'nis', 
-                    'class'       =>'form-control', 
-                    'required'    =>'required', 
-                    'value'       => set_value('nis') 
-                    )); 
-                  ?>
-                </div>
-                <!-- /.input group -->
-              </div>
-              <!-- /.form group -->
-
-              <!-- nama siswa -->
-              <div class="form-group">
-                <label>NAMA SISWA</label>
+                <label>NAMA GURU</label>
 
                 <div class="input-group">
                   <div class="input-group-addon">
@@ -82,7 +62,7 @@
                     'id'          =>'nama', 
                     'class'       =>'form-control', 
                     'required'    =>'required', 
-                    'value'       => set_value('nama') 
+                    'value'       => $guru->nama_guru 
                     )); 
                   ?>  
                 </div>
@@ -105,7 +85,7 @@
                     'id'          =>'tempat_lahir', 
                     'class'       =>'form-control', 
                     'required'    =>'required', 
-                    'value'       => set_value('tempat_lahir') 
+                    'value'       => $guru->tempat_lahir 
                     )); 
                   ?>
                 </div>
@@ -128,7 +108,7 @@
                       'name'        =>'tanggal_lahir',
                       'id'          =>'datemask',
                       'class'       =>'form-control',
-                      'value'       =>set_value('tanggal_lahir')
+                      'value'       => $guru->tanggal_lahir 
                     ));
                    ?>
                </div>
@@ -139,20 +119,20 @@
 
               <!-- nama wali -->
               <div class="form-group">
-                <label>NAMA WALI</label>
+                <label>NOMOR HANPHONE</label>
 
                 <div class="input-group">
                   <div class="input-group-addon">
-                    <i class="fa fa-user"></i>
+                    <i class="fa fa-mobile"></i>
                   </div>
                   <?php echo form_input(array(
-                    'type'        =>'text', 
-                    'placeholder' =>'ex. SUPARMAN', 
-                    'name'        =>'nama_wali', 
-                    'id'          =>'nama_wali', 
+                    'type'        =>'number', 
+                    'placeholder' =>'ex. 0895804266260', 
+                    'name'        =>'nomor', 
+                    'id'          =>'nomor', 
                     'class'       =>'form-control', 
                     'required'    =>'required', 
-                    'value'       => set_value('nama_wali') 
+                    'value'       => $guru->nomor
                     )); 
                   ?>  
                 </div>
@@ -160,46 +140,56 @@
               </div>
               <!-- /.form group -->
 
-               <!-- nomor ortu -->
+               <!-- email -->
               <div class="form-group">
-                <label>NO. HANDPHONE WALI</label>
+                <label>EMAIL</label>
 
                 <div class="input-group">
                   <div class="input-group-addon">
-                    <i class="fa fa-mobile"></i>
+                    <i class="fa fa-envelope"></i>
                   </div>
                   <?php echo form_input(array(
-                    'type'        =>'text', 
-                    'placeholder' =>'ex. 089580446626', 
-                    'name'        =>'hp_wali', 
-                    'id'          =>'hp', 
+                    'type'        =>'email', 
+                    'placeholder' =>'ex. aunur.rosidin@gmail.com', 
+                    'name'        =>'email', 
+                    'id'          =>'email', 
                     'class'       =>'form-control', 
-                    'required'    =>'required', 
-                    'value'       => set_value('hp_wali'),
+                    'value'       => $guru->email
                     )); 
                   ?> 
                 </div>
                 <!-- /.input group -->
               </div>
               <!-- /.form group -->
+
+              <div class="form-group">
+                <label>PENDIDIKAN TERAKHIR</label>
+                <?php echo form_dropdown('pendidikan terakhir',
+                  array(
+                    '01' => 'SMA Sedrajat',
+                    '02' => 'S1',
+                    '03' => 'S2',
+                    '04' => 'S3'
+                  ), $guru->pendidikan_terakhir, 'class="form-control"'); ?>                
+              </div>
+              <!-- /.form-group -->
             </div>
             <!-- /.col -->
 
             <div class="col-md-6">
 
-             <div class="form-group">
+               <div class="form-group">
                 <label>JENIS KELAMIN</label>
-                <?php
-                  echo form_dropdown('gender', array('L' => 'LAKI LAKI', 'P' => 'PEREMPUAN'), null, "class='form-control'");
-                ?>
+                <?php echo form_dropdown('gender', 
+                array(
+                  'L'=>'LAKI-LAKI', 
+                  'P'=>'PEREMPUAN'), $guru->gender, 'class="form-control"'); ?>
               </div>
               <!-- /.form-group -->
+
               <div class="form-group">
                 <label>AGAMA</label>
-                <?php
-                // ($name, $table, $field, $pk, $selected)
-                 echo cmb_dinamis('agama', 'tbl_agama', 'nama_agama', 'kd_agama');
-                 ?>
+                <?php echo cmb_dinamis('agama', 'tbl_agama', 'nama_agama', 'kd_agama', $guru->kd_agama); ?>
               </div>
               <!-- /.form-group -->
 
@@ -218,7 +208,7 @@
                     'class'       =>'form-control',
                     'style'       =>'margin:0px 74.5px 0px 0px; height: 75px; width: 485px',
                     'row'         =>'3', 
-                    'value'       => set_value('alamat')
+                    'value'       => $guru->alamat
                     )); 
                   ?>
                </div>
@@ -233,7 +223,7 @@
                         PILIH GAMBAR
                     </label>
                     <div class="fileupload fileupload-new" data-provides="fileupload"><input type="hidden">
-                        <div class="fileupload-new thumbnail" style="width: 150px; height: 125px;"><img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA?text=no+image" alt="">
+                        <div class="fileupload-new thumbnail" style="width: 150px; height: 125px;"><img src="<?php echo base_url('upload/guru/'.$guru->foto); ?>" alt="">
                         </div>
                         <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 150px; max-height: 125px; line-height: 10px;"></div><br>
                         <div class="col-md-11 col-sm-8">
@@ -249,19 +239,19 @@
               </div>
               <!-- /.col -->
               <div class="col-md-6"><br>
-                <p>anda telah menyetujui data dengan menekan tombol <span style="font-weight: bold">daftar </span><i class="fa fa-check"></i></p>
+                <p>anda telah menyetujui data dengan menekan tombol <span style="font-weight: bold">edit </span><i class="fa fa-check"></i></p>
 
                   <?php echo form_input(array(
                     'type'=>'submit', 
                     'name'=>'submit',  
                     'class'=>'btn btn-block btn-success btn-flat',
-                    'value'=> 'DAFTAR' 
+                    'value'=> 'EDIT' 
                     )); 
                   ?>
 
               <?php echo form_close(); ?>
 
-                <a href="<?php echo base_url('siswa'); ?>" type="button" class="btn btn-block btn-warning btn-flat">BATAL</a>
+                <a href="<?php echo base_url('guru'); ?>" type="button" class="btn btn-block btn-warning btn-flat">BATAL</a>
               </div>
             </div>
             <!-- /.row -->

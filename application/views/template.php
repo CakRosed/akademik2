@@ -682,16 +682,17 @@
 
 
 <script>
-  $(function () {
-    $('#example1').DataTable({
-      'paging'      : true,
-      'lengthChange': true,
-      'searching'   : true,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : true
-    });
-</script>
+    $(document).ready(function(){
+        $('#example1').dataTable({
+          'paging'      : true,
+          'lengthChange': true,
+          'searching'   : true,
+          'ordering'    : true,
+          'info'        : true,
+          'autoWidth'   : true
+        });
+    });      
+    </script>
 
 
 </body>
