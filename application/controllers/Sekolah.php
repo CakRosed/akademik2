@@ -7,13 +7,12 @@
 
  
     function index(){
-        $kd_sekolah = $this->model->get_all_data('kd_sekolah', 'tbl_sekolah_info')->row();
         $data = array(
                 'icon'  => 'fa fa-build',
                 'title' => 'DATA MAPEL',
                 'parent'=> 'SEKOLAH',
                 'child' => 'INFORMASI',
-                'sekolah'  => $this->model->get_data('*', 'tbl_sekolah_info', 'kd_sekolah="'.$kd_sekolah->kd_sekolah.'"')->row_object() 
+                'sekolah'  => $this->model->get_all_data('*', 'tbl_sekolah_info')->row_object() 
             );
 
         if (isset($_POST['submit'])) {
@@ -25,7 +24,7 @@
                     'alamat_sekolah'    => strip_tags($this->input->post('alamat_sekolah'))
                 );
 
-            $update = $this->model->update_data($kd_sekolah->kd_sekolah, 'kd_sekolah', $param, 'tbl_sekolah_info');
+            $update = $this->model->update_data($data['sekolah']->kd_sekolah, 'kd_sekolah', $param, 'tbl_sekolah_info');
            if ($update) {
                 echo "<scipt>alert('Sukses Merubah Informasi Sekolah');</script>";
                 redirect('sekolah');
