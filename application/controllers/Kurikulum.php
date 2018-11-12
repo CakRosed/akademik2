@@ -106,15 +106,15 @@
             'parent'        => 'KURIKULUM',
             'child'         => 'DETAIL',
             'info'          => $this->db->query($info_sekolah)->row(),
-            'kurikulum'     => $this->model->get_all_data('*', 'tbl_kurikulum')->result()
         );
 
         $this->template->load('template', 'kurikulum/detail', $data);
     }//end detail
 
     function dataKurikulumDetail(){
-        $kd_jurusan = $this->input->get('jurusan');
-        $kelas      = $this->input->get('kelas');
+        $kd_kurikulum   = $this->uri->segment(3);
+        $kd_jurusan     = $this->input->get('jurusan');
+        $kelas          = $this->input->get('kelas');
         if ($kelas == 'semua_kelas') {
             $selected_kelas = '';
         }else{
@@ -132,7 +132,7 @@
  
                 $sql ="SELECT tj.nama_jurusan, tm.kd_mapel, tm.nama_mapel, kd.kelas, kd.kd_kurikulum_detail, kd.kd_kurikulum
                         FROM tbl_kurikulum_detail as kd, tbl_kurikulum as tk, tbl_mapel as tm, tbl_jurusan as tj
-                        WHERE kd.kd_kurikulum = tk.id_kurikulum and kd.kd_mapel = tm.kd_mapel and kd.kd_jurusan = tj.kd_jurusan $selected_kelas and kd.kd_jurusan ='$kd_jurusan'";
+                        WHERE tk.id_kurikulum=$kd_kurikulum and kd.kd_kurikulum = tk.id_kurikulum and kd.kd_mapel = tm.kd_mapel and kd.kd_jurusan = tj.kd_jurusan $selected_kelas and kd.kd_jurusan ='$kd_jurusan'";
                 $kurikulum = $this->db->query($sql)->result();
                 $no = 1;
                 foreach ($kurikulum as $row) {
@@ -142,7 +142,7 @@
                             <td  class='text-center'>".$row->nama_mapel."</td>
                             <td  class='text-center'>".$row->kelas."</td>
                             <td  class='text-center'>
-                                ".anchor('kurikulum/deletedetail/'.$row->kd_kurikulum_detail.'/'.$row->kd_kurikulum,'<i class="fa fa-trash"></i>')."
+                                ".anchor('kurikulum/deletedetail/'.$row->kd_kurikulum_detail.'/'.$row->kd_kurikulum,'<i class="fa fa-trash"></i>', 'class="btn btn-xs btn-danger tooltips btn-flat"')."
                             </td>
                         </tr>";
                 }
@@ -163,6 +163,49 @@
             }
         }
     } //end deletedetail
+
+    function adddetail(){
+        if (isset($_POST['submit'])) {
+
+            $kd_mapel = $this->input->post('mapel');
+            $kd_jurusan = $this->input->post('jurusan');
+            $kelas = $this->input->post('kelas');
+            $param = array(
+
+                'kd_mapel'      => $kd_mapel,
+                'kd_jurusan'    => $kd_jurusan,
+                'kelas'         => $kelas,
+                'kd_kurikulum'  => $this->uri->segment(3)
+            );
+
+            $sql = "SELECT *
+                    FROM tbl_kurikulum_detail as kd
+                    WHERE kd.kelas='$kelas' and kd.kd_jurusan='$kd_jurusan' and kd.kd_mapel='$kd_mapel'";
+            $check = $this->db->query($sql);
+            if ($check->num_rows() > 0) {
+                echo "<script>alert('Mata Pelajaran Telah Terdaftar Pada Kelas Yang Sama!')</script>";
+            }else{
+                $save =$this->model->save_data($param,'tbl_kurikulum_detail');
+                if ($save) {
+                    echo "<scrip>alert('Sukses Insert Data')</script>";
+                    redirect('kurikulum/detail/'.$this->uri->segment(3));
+                }else{
+                    echo "<scrip>alert('Gagal Insert Data!')</scrip>";
+                }
+            }
+        }
+        $info_sekolah   = "SELECT js.jumlah_kelas
+                    FROM tbl_jenjang_sekolah as js, tbl_sekolah_info as si
+                    WHERE js.kd_jenjang = si.kd_jenjang_sekolah";
+         $data = array(
+            'icon'          => 'fa fa-plus',
+            'title'         => 'TAMBAH DETAIL KURIKULUM',
+            'parent'        => 'KURIKULUM',
+            'child'         => 'TAMBAH DETAIL',
+            'info'          => $this->db->query($info_sekolah)->row()
+        );
+    $this->template->load('template', 'kurikulum/add_detail', $data);
+    }
 
  }
  ?> 

@@ -7,12 +7,15 @@
 
 
     function index(){
+        $sql = "SELECT tr.kd_rombel, tr.nama_rombel, tr.kelas, tj.nama_jurusan
+                FROM tbl_jurusan as tj, tbl_rombel as tr 
+                WHERE tj.kd_jurusan = tr.kd_jurusan";
     	$data = array(
 				'icon'  => 'fa fa-book',
 				'title' => 'DATA rombel',
 				'parent'=> 'ROMBONGAN BELAJAR',
 				'child' => 'LIST',
-				'rombel'  => $this->model->get_all_data('*', 'tbl_rombel')->result() 
+                'rombel'  => $this->db->query($sql)->result() 
 			);
     	$this->template->load('template', 'rombel/list', $data);
     } //end function index

@@ -21,6 +21,11 @@
               </select>
             </td>
           </tr>
+          <tr>
+            <td colspan="2">
+              <a href="<?php echo base_url('kurikulum/adddetail/'.$this->uri->segment(3)); ?>" type="button" class="btn btn-block btn-success btn-flat"><i class="fa fa-plus"></i> TAMBAH DETAIL</a>
+            </td>
+          </tr>
        </table>
       </div> <!-- /.box-body -->
     </div> <!-- endbox -->
@@ -46,11 +51,12 @@
 
 <script>
   function loadData(){
-    var jurusan = $('#jurusan').val();
-    var kelas   = $('#kelas').val();
+    var jurusan   = $('#jurusan').val();
+    var kelas     = $('#kelas').val();
+    var kd_jurusan= <?php echo $this->uri->segment(3); ?> 
     $.ajax({
       type:'GET',
-      url : '<?php echo base_url() ?>kurikulum/dataKurikulumDetail',
+      url : '<?php echo base_url() ?>kurikulum/dataKurikulumDetail/<?php echo $this->uri->segment(3) ?>',
       data: 'jurusan='+jurusan+'&kelas='+kelas,
       success:function(html){
         $("#tabel").html(html);
