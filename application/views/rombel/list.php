@@ -1,7 +1,7 @@
 <div class="box">
             <div class="box-header">
               <div class="col-md-3">                
-              <a href="<?php echo base_url('rombel/add'); ?>" type="button" class="btn btn-block btn-success btn-flat"><i class="fa fa-plus"></i> DAFTAR MATA PELAJARAN</a>
+              <a href="<?php echo base_url('rombel/add'); ?>" type="button" class="btn btn-block btn-success btn-flat"><i class="fa fa-plus"></i> INSERT ROMBONGAN BELAJAR</a>
               </div>
             </div>
             <!-- /.box-header -->

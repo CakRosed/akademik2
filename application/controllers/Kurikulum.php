@@ -56,11 +56,11 @@
 			'title' => 'EDIT KURIKULUM',
 			'parent'=> 'KURIKULUM',
 			'child' => 'EDIT',
-			'kurikulum' => $this->model->get_data('*', 'tbl_kurikulum', "id_kurikulum='".$kd_kurikulum."'")->row_object() 
+			'kurikulum' => $this->model->get_data('*', 'tbl_kurikulum', "id_kurikulum='".$id_kurikulum."'")->row_object() 
     	);
 
     	if (isset($_POST['submit'])) {
-    		$id_kurikulum 	= strip_tags(trim($this->input->post('kd_kurikulum', TRUE)));
+    		$id_kurikulum 	= strip_tags(trim($this->input->post('id_kurikulum', TRUE)));
     		$param = array(
                     'id_kurikulum'      => $id_kurikulum,
                     'nama_kurikulum'    => trim($this->input->post('nama_kurikulum')),
@@ -68,7 +68,7 @@
                 );
             // print_r($param); die;
 
-            $update = $this->model->update_data($kd_kurikulum, 'id_kurikulum', $param, 'tbl_kurikulum');
+            $update = $this->model->update_data($id_kurikulum, 'id_kurikulum', $param, 'tbl_kurikulum');
     	   if ($update) {
                 echo "<scipt>alert('Sukses Mendaftar Mata Pelajaran');</script>";
                 redirect('kurikulum');
@@ -140,7 +140,7 @@
                             <td  class='text-center'>".$no++."</td>
                             <td  class='text-center'>".$row->kd_mapel."</td>
                             <td  class='text-center'>".$row->nama_mapel."</td>
-                            <td  class='text-center'>".$row->kelas."</td>
+                            <td  class='text-center'>KELAS ".$row->kelas."</td>
                             <td  class='text-center'>
                                 ".anchor('kurikulum/deletedetail/'.$row->kd_kurikulum_detail.'/'.$row->kd_kurikulum,'<i class="fa fa-trash"></i>', 'class="btn btn-xs btn-danger tooltips btn-flat"')."
                             </td>

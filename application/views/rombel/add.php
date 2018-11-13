@@ -1,6 +1,6 @@
 
 
-<!-- SELECT2 EXAMPLE -->
+<!-- SELECT2 EXAMPLE --> 
       <div class="box box-success">
         <div class="box-header with-border">
           <h3 class="box-title">INPUT DATA MAPEL</h3>
@@ -17,25 +17,25 @@
             <div class="col-md-6">
             
               <?php 
-                echo form_open_multipart('mapel/add', 'role="from"');
+                echo form_open_multipart('rombel/add', 'role="from"');
                ?>
 
-                <!-- nisn -->
+                <!-- nama -->
                 <div class="form-group">
-                  <label>KODE MATA PELAJARAN</label>
+                  <label>NAMA ROMBONGAN BELAJR</label>
 
                   <div class="input-group">
                     <div class="input-group-addon">
-                      <i class="fa fa-id-card-o"></i>
+                      <i class="fa fa-users"></i>
                     </div>
                     <?php echo form_input(array(
                       'type'          =>'text', 
-                      'placeholder'   =>'ex. BIND11081', 
-                      'name'          =>'kd_mapel', 
-                      'id'            =>'kd_mapel', 
+                      'placeholder'   =>'xEINSTEIN', 
+                      'name'          =>'nama_rombel', 
+                      'id'            =>'nama_rombel', 
                       'class'         =>'form-control', 
                       'required'      =>'required', 
-                      'value'         => set_value('kd_mapel') 
+                      'value'         => set_value('nama_rombel') 
                       )); 
                     ?>
                   </div>
@@ -43,28 +43,37 @@
                 </div>
                 <!-- /.form group -->
 
-              <!-- nama  -->
+              <!-- kelas  -->
               <div class="form-group">
-                <label>NAMA MATA PELAJARAN</label>
+                <label>KELAS</label>
 
                 <div class="input-group">
                   <div class="input-group-addon">
-                    <i class="fa fa-book"></i>
+                    <i class="fa fa-building"></i>
                   </div>
-                  <?php echo form_input(array(
-                    'type'        =>'text', 
-                    'placeholder' =>'ex. BAHASA INDONESIA', 
-                    'name'        =>'nama_mapel', 
-                    'id'          =>'nama_mapel', 
-                    'class'       =>'form-control', 
-                    'required'    =>'required', 
-                    'value'       => set_value('nama_mapel') 
-                    )); 
-                  ?>  
+                  <select name="kelas" id="kelas" class="form-control">
+                    <?php for ($i=1; $i <= $rombel->jumlah_kelas; $i++) { 
+                      echo "<option value='$i'>KELAS $i</option>";
+                    } ?>
+                  </select>
                 </div>
                 <!-- /.input group -->
               </div>
               <!-- /.form group -->
+
+              <!-- jurusan -->
+                <div class="form-group">
+                  <label>JURUSAN</label>
+
+                  <div class="input-group">
+                    <div class="input-group-addon">
+                      <i class="fa fa-sitemap"></i>
+                    </div>
+                    <?php echo cmb_dinamis('jurusan','tbl_jurusan', 'nama_jurusan', 'kd_jurusan'); ?>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
 
               <!-- /.col -->
               <div class="col-md-6"><br>
@@ -80,7 +89,7 @@
 
               <?php echo form_close(); ?>
 
-                <a href="<?php echo base_url('mapel'); ?>" type="button" class="btn btn-block btn-warning btn-flat">BATAL</a>
+                <a href="<?php echo base_url('rombel'); ?>" type="button" class="btn btn-block btn-warning btn-flat">BATAL</a>
               </div>
             </div>
             <!-- /.row -->
