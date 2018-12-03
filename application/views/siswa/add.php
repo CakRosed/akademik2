@@ -193,6 +193,7 @@
                   echo form_dropdown('gender', array('L' => 'LAKI LAKI', 'P' => 'PEREMPUAN'), null, "class='form-control'");
                 ?>
               </div>
+
               <!-- /.form-group -->
               <div class="form-group">
                 <label>AGAMA</label>
@@ -202,6 +203,17 @@
                  ?>
               </div>
               <!-- /.form-group -->
+              
+               <!-- /.form-group -->
+              <div class="form-group">
+                <label>ROMBONGAN BELAJAR</label>
+                <?php
+                // ($name, $table, $field, $pk, $selected)
+                 echo cmb_dinamis('rombel', 'tbl_rombel', 'nama_rombel', 'kd_rombel');
+                 ?>
+              </div>
+              <!-- /.form-group -->
+
 
               <!-- alamat -->
               <div class="form-group">

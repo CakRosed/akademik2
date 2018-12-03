@@ -222,14 +222,29 @@
                     'id'          =>'alamat', 
                     'class'       =>'form-control',
                     'style'       =>'margin:0px 74.5px 0px 0px; height: 75px; width: 485px',
-                    'row'         =>'3', 
-                    'value'       => $siswa->alamat
-                    )); 
+                    'row'         =>'3'
+                    ), $siswa->alamat); 
                   ?>
                </div>
                 <!-- /.input group -->
               </div>
               <!-- /.form group -->
+             
+             
+              <!-- rombel -->
+              <div class="form-group">
+                <label>ROMBONGAN BELAJAR</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-map-marker"></i>
+                  </div>
+                    <?php echo cmb_dinamis('rombel', 'tbl_rombel', 'nama_rombel', 'kd_rombel', $siswa->id_rombel, 'class="form-control"'); ?>
+               </div>
+                <!-- /.input group -->
+              </div>
+              <!-- /.form group -->
+
+
 
             <div class="row">              
               <div class="col-md-4 col-sm-12">

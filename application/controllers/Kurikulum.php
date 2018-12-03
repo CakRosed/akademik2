@@ -167,20 +167,21 @@
     function adddetail(){
         if (isset($_POST['submit'])) {
 
-            $kd_mapel = $this->input->post('mapel');
-            $kd_jurusan = $this->input->post('jurusan');
-            $kelas = $this->input->post('kelas');
+            $kd_mapel       = $this->input->post('mapel');
+            $kd_jurusan     = $this->input->post('jurusan');
+            $kelas          = $this->input->post('kelas');
+            $kd_kurikulum	= $this->uri->segment(3);
             $param = array(
 
                 'kd_mapel'      => $kd_mapel,
                 'kd_jurusan'    => $kd_jurusan,
                 'kelas'         => $kelas,
-                'kd_kurikulum'  => $this->uri->segment(3)
+                'kd_kurikulum'  => $kd_kurikulum
             );
 
             $sql = "SELECT *
                     FROM tbl_kurikulum_detail as kd
-                    WHERE kd.kelas='$kelas' and kd.kd_jurusan='$kd_jurusan' and kd.kd_mapel='$kd_mapel'";
+                    WHERE kd.kelas='$kelas' and kd.kd_jurusan='$kd_jurusan' and kd.kd_mapel='$kd_mapel' and kd_kurikulum=$kd_kurikulum";
             $check = $this->db->query($sql);
             if ($check->num_rows() > 0) {
                 echo "<script>alert('Mata Pelajaran Telah Terdaftar Pada Kelas Yang Sama!')</script>";

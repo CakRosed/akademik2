@@ -1,8 +1,9 @@
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-10">
     <div class="box">
       <!-- /.box-header -->
       <div class="box-body">
+        <?php echo form_open('jadwal/cetak_jadwal'); ?>
         <table class="table table-bordered" style="width:100%">
           <tr>
             <td>JURUSAN</td>
@@ -16,7 +17,7 @@
                   for ($i=1; $i <= $info->jumlah_kelas ; $i++) { 
                     echo "<option value='$i'>KELAS $i</option>";
                   }
-                 ?>
+                ?>
               </select>
             </td>
           </tr>
@@ -26,16 +27,34 @@
           </tr>
           <tr>
             <td colspan="2">
-              <!-- Button trigger modal -->
-              <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
-                <i class="fa fa-cogs"></i> Generate Jadwal
-              </button>
+              <button target="blank" class="btn btn-danger  btn-sm" name="export_jadwal"  type="submit"><i class="fa fa-print"> Cetak Jadwal</i></button>
             </td>
           </tr>
-       </table>
+        </form>
+        </table>
       </div> <!-- /.box-body -->
     </div> <!-- endbox -->
   </div> <!-- end col -->
+
+  <div class="col-md-2">
+    <div class="box">
+      <div style="margin-left:5px; padding-bottom:45px; padding-top:25px;" class="box-body">
+        <!-- Button trigger modal -->
+        <div style="margin-left:15px; margin-bottom:15px;">
+          <i class="fa fa-cogs fa-5x"></i><br>
+        </div>
+        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+          Generate Jadwal
+        </button>
+        <br><br>
+        <div style="margin-left:8px;">
+          <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal2">
+            Resset Jadwal
+          </button>
+        </div>  
+      </div>
+    </div>
+  </div>
 
   <div class="col-md-12">
     <div class="box">
@@ -46,7 +65,7 @@
       <!-- /.box-body -->
     </div>
     <!-- /.box -->
-  </div> <!-- end col 8 -->
+  </div> <!-- end col 10 -->
 </div> <!-- end row -->
 
 <script type="text/javascript">
@@ -120,12 +139,12 @@
     });
   }
 
-  function updateJamMulai(id){
-    var jamMulai  = $('#jamMulai'+id).val();
+  function updateJam(id){
+    var jam  = $('#jam'+id).val();
     $.ajax({
       type  : 'GET',
-      url   : '<?php echo base_url("jadwal/updateJamMulai"); ?>',
-      data  : 'jamMulai='+jamMulai+'&id_jadwal='+id,
+      url   : '<?php echo base_url("jadwal/updateJam"); ?>',
+      data  : 'jam='+jam+'&id_jadwal='+id,
       success:function(html){
         $('#table').html(html);
       }
@@ -154,7 +173,7 @@
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-     <?php echo form_open('jadwal/generateJadwal'); ?>
+      <?php echo form_open('jadwal/generateJadwal'); ?>
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="myModalLabel">Generate Jadwal</h4>
@@ -175,7 +194,37 @@
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="submit" name="submit" class="btn btn-primary">SIMPAN</button>
       </div>
-     </form>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal --> 
+
+<!-- Modal -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <?php echo form_open('jadwal/ressetJadwal'); ?>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Resset Jadwal</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered ">
+          <tr>
+            <td>KURIKULUM</td>
+            <td><?php echo cmb_dinamis('kurikulum', 'tbl_kurikulum', 'nama_kurikulum', 'id_kurikulum'); ?></td>
+          </tr>
+          <tr>
+            <td>SEMESTER</td>
+            <td><?php echo form_dropdown('semester',  array('1'=>'SEMESTER 1', '2'=>'SEMESTER 2'), null, 'CLASS="form-control"'); ?></td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" name="submit" class="btn btn-danger">RESSET</button>
+      </div>
+      </form>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal --> 

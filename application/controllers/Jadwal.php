@@ -28,6 +28,14 @@
             }else{ 
                 redirecr('jadwal');
             }
+        } //end generate
+
+        function ressetJadwal(){
+            if (isset($_POST['submit'])) {
+                $this->mjadwal->ressetJadwal();
+            }else{
+                redirect('jadwal');
+            }
         }
 
         function dataJadwal(){
@@ -35,19 +43,18 @@
             $kelas          = strip_tags(trim($this->input->get('kelas'))); 
             $rombel         = strip_tags(trim($this->input->get('rombel'))); 
             // echo $rombel;die;
-             echo '<table class="table table-striped table-bordered" style="width:100%">
+            echo '<table class="table table-striped table-bordered" style="width:100%">
                     <tr>
-                      <th class="text-center">NO</th>
-                      <th class="text-center">NAMA MATA PELAJARAN</th>
-                      <th class="text-center">GURU</th>
-                      <th class="text-center">RUANGAN</th>
-                      <th class="text-center">HARI</th>
-                      <th class="text-center">JAM MULAI</th>
-                      <th class="text-center">JAM SELESAI</th>
-                      <th class="text-center"></th>
+                        <th class="text-center">NO</th>
+                        <th class="text-center">NAMA MATA PELAJARAN</th>
+                        <th class="text-center">GURU</th>
+                        <th class="text-center">RUANGAN</th>
+                        <th class="text-center">HARI</th>
+                        <th class="text-center">JAM</th>
+                        <th class="text-center"></th>
                     </tr>'; 
     
-                    $sql    = "SELECT tm.nama_mapel, tg.nama_guru, tr.nama_ruangan, tj.hari, tj.jam_mulai, tj.jam_selesai, tj.kd_ruangan, tj.id_guru, tj.id_jadwal
+                    $sql    = "SELECT tm.nama_mapel, tg.nama_guru, tr.nama_ruangan, tj.hari, tj.jam, tj.kd_ruangan, tj.id_guru, tj.id_jadwal
                                 FROM tbl_jadwal as tj, tbl_mapel as tm, tbl_ruangan as tr, tbl_guru as tg, tbl_rombel as tb 
                                 WHERE tj.kd_mapel=tm.kd_mapel and tj.kd_ruangan=tr.kd_ruangan and tj.id_guru=tg.nuptk and tj.kelas='$kelas'
                                 and tj.kd_jurusan='$kd_jurusan' and tj.id_rombel=tb.kd_rombel and tj.id_rombel=$rombel";
@@ -68,14 +75,17 @@
                                 <td  class='text-center'>".$no++."</td>
                                 <td>".$row->nama_mapel."</td>
                                 <td  class='text-center'>".cmb_dinamis('guru', 'tbl_guru', 'nama_guru', 'nuptk', $row->id_guru, 'class="form-control" id="guru'.$row->id_jadwal.'" onchange="updateGuru('.$row->id_jadwal.')"')."</td>
+
                                 <td  class='text-center'>".cmb_dinamis('ruangan', 'tbl_ruangan', 'nama_ruangan', 'kd_ruangan', $row->kd_ruangan, 'class="form-control" id="ruangan'.$row->id_jadwal.'" onchange="updateRuangan('.$row->id_jadwal.')"')."</td>
+
                                 <td  class='text-center'>".form_dropdown('hari', $hari, $row->hari,"class='form-control' id='hari".$row->id_jadwal."' onchange='updateHari(".$row->id_jadwal.")'")."</td>
-                                <td  class='text-center'>".form_dropdown('jamMulai', $jam, $row->jam_mulai,"class='form-control' id='jamMulai".$row->id_jadwal."' onchange='updateJamMulai(".$row->id_jadwal.")'")."</td>
-                                <td  class='text-center'>".form_dropdown('jamSelesai', $jam, $row->jam_selesai,"class='form-control' id='jamSelesai".$row->id_jadwal."' onchange='updateJamSelesai(".$row->id_jadwal.")'")."</td>
+
+                                <td  class='text-center'>".form_dropdown('jam', $jam, $row->jam,"class='form-control' id='jam".$row->id_jadwal."' onchange='updateJam(".$row->id_jadwal.")'")."</td>
+
                                 <td  class='text-center'>".anchor('jadwal/deleteJadwal/'.$row->id_jadwal,'<i class="fa fa-trash"></i>', 'class="btn btn-xs btn-danger tooltips btn-flat" onconfirm')."</td>
                                 </tr>";
                     }
-              echo '</table>';
+            echo '</table>';
         } //end dataJadwal
 
         function updateGuru(){
@@ -114,11 +124,11 @@
             }
         } //end updateHari
         
-        function updateJamMulai(){
-            $jamMulai   = strip_tags(trim($this->input->get('jamMulai')));
-            $id_jadwal  = strip_tags(trim($this->input->get('id_jadwal')));
+        function updateJam(){
+            $jam        = strip_tags($this->input->get('jam'));
+            $id_jadwal  = strip_tags($this->input->get('id_jadwal'));
             $this->db->where('id_jadwal', $id_jadwal);
-            $update     = $this->db->update('tbl_jadwal', array('jam_mulai'=>$jamMulai)); 
+            $update     = $this->db->update('tbl_jadwal', array('jam'=>$jam)); 
             if($update){
                 echo "<script>alert('Sukses Merubah Data);</script>";
             }else{
@@ -152,7 +162,7 @@
         } //end deleteJadwal
 
         function showRombel(){
-            echo "<select id='rombel' class='form-control' onchange='loadPelajaran()'>";
+            echo "<select id='rombel' name='rombel' class='form-control' onchange='loadPelajaran()'>";
                 $select = array(
                     'kelas'      => strip_tags(trim($this->input->get('kelas'))), 
                     'kd_jurusan' => strip_tags(trim($this->input->get('jurusan')))
@@ -161,7 +171,47 @@
                 foreach($rombel->result() as $row){
                     echo "<option value='$row->kd_rombel'>$row->nama_rombel</option>";
                 }
-           echo "</select>"; 
-        }
+            echo "</select>"; 
+        } //end showRombel
+
+        function cetak_jadwal(){
+            $rombel = $this->input->post('rombel');
+            $this->load->library('CFPDF');
+            $pdf = new FPDF('L', 'mm', 'A4');
+            $pdf->AddPage();
+            $pdf->SetFont('Arial','',10);
+            $pdf->Cell(270,10,'JADWAL PELAJARAN', '0', '1', 'C');
+            $pdf->Cell(15,10,'NO.',1,0,'C');
+            $pdf->Cell(32,10,'WAKTU',1,0,'C');
+            // forach di kolom judul
+            $days       = $this->mjadwal->getHari();
+            foreach ($days as $day) {
+                $pdf->Cell(32,10,$day,1,0,'C');
+            }
+            $pdf->Cell(32,10,'',0,1,'C'); //untuk enter
+
+            $jam_ajar   = $this->mjadwal->getJamPelajaran();
+            $no = 1;
+            foreach ($jam_ajar as $jam) {
+                $pdf->Cell(15,10,$no,1,0,'C');
+                $pdf->Cell(32,10,$jam,1,0,'L');
+                //foreach hari di kolom jadwal
+                foreach ($days as $day){
+                    $pelajaran = $this->model->get_data('tj.*, tm.nama_mapel', 'tbl_mapel as tm, tbl_jadwal as tj', 'tj.kd_mapel=tm.kd_mapel and tj.hari="'.$day.'" and tj.jam="'.$jam.'" and id_rombel='.$rombel);
+                    if ($pelajaran->num_rows()>0) {
+                        foreach ($pelajaran->result() as $mapel) {
+                            $pdf->SetFont('Arial','',8);
+                            $pdf->Cell(32,10,$mapel->nama_mapel,1,0,'L');
+                        }
+                    }else{
+                            $pdf->Cell(32,10,'-',1,0,'L');
+                        }
+                    $pdf->SetFont('Arial','',10);
+                }
+                $pdf->Cell(32,10,'',0,1,'C'); //untuk enter
+                $no++;
+            }
+            $pdf->Output();
+        } //end cetak_jadwal               
     } //end class
 ?>

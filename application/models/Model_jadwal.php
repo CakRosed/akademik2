@@ -1,5 +1,26 @@
 <?php
     Class Model_jadwal extends CI_Model{
+        
+        function ressetJadwal(){
+            $id_kurikulum    = strip_tags(trim($this->input->post('kurikulum')));
+            $semester        = strip_tags(trim($this->input->post('semester')));
+            $kurikulum_detail= $this->db->get_where('tbl_kurikulum_detail', array('kd_kurikulum' =>$id_kurikulum));
+            foreach ($kurikulum_detail->result() as $row) {
+                $where	= array(
+                    'kd_jurusan'    => $row->kd_jurusan,
+                    'kelas'         => $row->kelas,
+                    'semester'      => $semester,
+                );
+                $delete = $this->db->delete('tbl_jadwal', $where);
+            }
+            if ($delete) {
+                echo "<script>alert('Sukses Reset Jadwal');</script>";
+            }else{
+                echo "<script>alert('Gagal Reset Jadwal');</script>";
+            }
+            redirect('jadwal');
+        } //end resetJadwal
+
         function generateJadwal(){
             $id_kurikulum   = strip_tags(trim($this->input->post('kurikulum')));
             $semester       = strip_tags(trim($this->input->post('semester')));
@@ -21,8 +42,7 @@
                         'kelas'                 => $row->kelas,
                         'kd_mapel'              => $row->kd_mapel,
                         'id_guru'               => '1',
-                        'jam_mulai'             => '',
-                        'jam_selesai'           => '',
+                        'jam'                   => '',
                         'kd_ruangan'            => '1',
                         'semester'              => $semester,
                         'hari'                  => '',
@@ -38,9 +58,35 @@
             }
             redirect('jadwal');
         } //end generateJadawl
+
+        function getHari(){
+            $days = array(
+                'SENIN'  =>  'SENIN',
+                'SELASA' =>  'SELASA',
+                'RABU'   =>  'RABU',
+                'KAMIS'  =>  'KAMIS',
+                'JUMAT'  =>  'JUMAT',
+                'SABTU'  =>  'SABTU',
+                'MINGGU' =>  'MINGGU',
+            );
+            return $days;
+        }
         
         function getJamPelajaran(){
-            $jam = array(
+            $jam  = array(
+                '07.15 - 08.00' =>'07.15 - 08.00',
+                '08.00 - 08.45' =>'08.00 - 08.45',
+                '08.45 - 09.30' =>'08.45 - 09.30',
+                '09.30 - 10.00' =>'09.30 - 10.00',
+                '10.00 - 10.45' =>'10.00 - 10.45',
+                '10.45 - 11.30' =>'10.45 - 11.30',
+                '11.30 - 12.15' =>'11.30 - 12.15',
+                '12.15 - 13.00' =>'12.15 - 13.00',
+                '13.00 - 13.30' =>'13.00 - 13.30',
+                '13.30 - 14.15' =>'13.30 - 14.15',
+                '14.15 - 15.00' =>'14.15 - 15.00'
+            );
+            $jamm = array(
                 '06:15' => '06:15',
                 '06:00' => '06:00',
                 '06:30' => '06:30',
