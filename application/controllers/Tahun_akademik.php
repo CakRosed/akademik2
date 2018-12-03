@@ -27,7 +27,7 @@ Class Tahun_akademik extends CI_Controller{
 
     	if (isset($_POST['submit'])) {
             $tahun 		= strip_tags(trim($this->input->post('tahun_akademik')));
-            $is_aktif 		= strip_tags(trim($this->input->post('is_aktif')));
+            $is_aktif 	= strip_tags(trim($this->input->post('is_aktif')));
 			$check 		= $this->model->get_data('*', 'tbl_tahun_akademik', 'tahun_akademik="'.$tahun.'"');
 			$tahun_ad 	= $this->model->get_data('*', 'tbl_tahun_akademik', array('is_aktif'=> 'y'))->row_object();
 			$rombel		= $this->db->get('tbl_rombel');
@@ -35,40 +35,32 @@ Class Tahun_akademik extends CI_Controller{
                 echo "<script>alert('Tahun Akademik Telah Terdaftar!');</script>";
             }else{
                 $param = array(
-                    'kd_tahun_akademik' => '',
                     'tahun_akademik'    => $tahun,
                     'is_aktif'          => $is_aktif
 				);
-
-				//definisikan data dummy
-				foreach($rombel->result() as $row){
-					$param2= array(
-						'id_guru'           => '2',
-						'id_tahun_akademik' => $tahun_ad->kd_tahun_akademik,
-						'id_rombel'         => $row->kd_rombel
-					);
-					//looping insert data dummy
-					$simpan = $this->model->save_data($param2, 'tbl_walikelas');
-				} //end foreach setup data dummy
-				
 				if ($is_aktif=='y') {
-					$update_actifity = $this->db->replace('tbl_tahun_akademik', array('is_aktif'=>'n'));	
-					$simpan2= $this->model->save_data($param2, 'tbl_walikelas');
-					if ($simpan && $simpan2 && $update_actifity) {
-						echo "<script>alert('Berhasil Menambah Data');</script>";
-						redirect('tahun_akademik');
-					}else{
-						echo "<script>alert('Gagal menambah data!');</script>";
-					}
-				}else{
-					$simpan2= $this->model->save_data($param2, 'tbl_walikelas');
-					if ($simpan && $simpan2 && $update_actifity) {
-						echo "<script>alert('Berhasil Menambah Data');</script>";
-						redirect('tahun_akademik');
-					}else{
-						echo "<script>alert('Gagal menambah data!');</script>";
-					}
+					$param2 = array(
+						'tahun_akademik'=> $tahun,
+						'is_aktif'		=> 'n'
+					);
+					$this->db->where(array('is_aktif'=>'y'));
+					$update = $this->db->update('tbl_tahun_akademik', $param2);
+				} // end cek y
+				$insert = $this->db->insert('tbl_tahun_akademik', $param);
+				
+				foreach ($rombel->result() as $rom) {
+					$get_tahun = $this->model->get_data('*', 'tbl_tahun_akademik', array('tahun_akademik'=>$tahun))->row_object();
+					$param3 = array(
+						'id_tahun_akademik'	=> $get_tahun->kd_tahun_akademik,
+						'id_guru'			=> '1',
+						'id_rombel'			=> $rom->kd_rombel
+					);
+					$loopInsert = $this->db->insert('tbl_walikelas', $param3);
+				}
 
+				if ($insert && $update) {
+					echo "<script>alert('Sukses Insert Data');</script>";
+					redirect('Tahun_akademik');
 				}
             }
     	}
@@ -86,20 +78,28 @@ Class Tahun_akademik extends CI_Controller{
     	);
 
     	if (isset($_POST['submit'])) {
+			$is_aktif	= strip_tags(trim($this->input->post('is_aktif')));
     		$kd_tahun_akademik 	= strip_tags(trim($this->input->post('kd_tahun_akademik', TRUE)));
     		$param = array(
                     'kd_tahun_akademik' => $kd_tahun_akademik,
                     'tahun_akademik'    => trim($this->input->post('tahun_akademik')),
-                    'is_aktif'          => strip_tags(trim($this->input->post('is_aktif')))
-                );
-
+                    'is_aktif'          => $is_aktif
+				);
+			$param2 = array(
+				'tahun_akademik' => strip_tags(trim($this->input->post('tahun_akademik'))),
+				'is_aktif'		 => 'n'
+			);	
+			if ($is_aktif = 'y') {
+				$this->db->where(array('is_aktif' => $is_aktif));
+				$update2 = $this->db->update('tbl_tahun_akademik', $param2);
+			}
             $update = $this->model->update_data($kd_tahun_akademik, 'kd_tahun_akademik', $param, 'tbl_tahun_akademik');
-    	   if ($update) {
-                echo "<scipt>alert('Sukses Mendaftar Mata Pelajaran');</script>";
-                redirect('tahun_akademik');
-           }else{
-                echo "<script>alert('Gagal Mendaftar Mata Kuliah!');</script>";
-           }
+			if ($update && $update2) {
+					echo "<scipt>alert('Sukses Mendaftar Mata Pelajaran');</script>";
+					redirect('tahun_akademik');
+			}else{
+					echo "<script>alert('Gagal Mendaftar Mata Kuliah!');</script>";
+			}
         } // end if post
 
     	$this->template->load('template', 'tahun_akademik/edit', $data);

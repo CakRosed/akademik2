@@ -15,14 +15,31 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="text-center">1</td>
-                    <td class="text-center">SIAPA</td>
-                    <td class="text-center">SIAPA</td>
-                    <td class="text-center">SIAPA</td>
-                    <td class="text-center">SIAPA</td>
-                </tr>
+                    <?php
+                        $no=1;
+                        foreach ($data as $row) {
+                            echo 
+                            '<tr>
+                            <td class="text-center">'.$no++.'</td>
+                            <td class="text-center">'.$row->nama_rombel.'</td>
+                            <td class="text-center">'.$row->nama_jurusan.'</td>
+                            <td class="text-center">'.$row->kelas.'</td>
+                            <td class="text-center">'.cmb_dinamis('guru', 'tbl_guru', 'nama_guru', 'nuptk', $row->nuptk, 'id="guru" class="form-control" onchange="update_guru('.$row->id_walikelas.')"').'</td>
+                            </tr>';
+                        }
+                    ?>
             </tbody>
         </table>
     </div>
 </div>
+
+<script type="text/javascript">
+    function update_guru(id_walikelas){
+        var id_guru	     = $('#guru').val();
+        $.ajax({
+            type   : 'GET',
+            url    : '<?php echo base_url("walikelas/update_walikelas"); ?>',
+            data   : 'id_walikelas='+id_walikelas+'&id_guru='+id_guru
+        });
+    }
+</script>

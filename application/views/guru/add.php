@@ -177,7 +177,7 @@
 
             <div class="col-md-6">
 
-               <div class="form-group">
+              <div class="form-group">
                 <label>JENIS KELAMIN</label>
                 <?php echo form_dropdown('gender', 
                 array(
