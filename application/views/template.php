@@ -34,7 +34,7 @@
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href= <?php echo base_url('asset/dist/css/skins/_all-skins.min.css'); ?>>
   <!-- fuleupload -->
-  <link type="text/css" rel="stylesheet" href="http://www.cliptheme.com/preview/admin/clip-one/assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css" />
+  <link type="text/css" rel="stylesheet" href="http://www.cliptheme.com/preview/admin/clip-one/assets/plugins/bootstrap-fileupload/user/bootstrap-fileupload.min.css" />
 
 
   <!-- jQuery 3 -->
@@ -87,7 +87,7 @@
                   <li><!-- start message -->
                     <a href="#">
                       <div class="pull-left">
-                        <img src="<?php echo base_url('upload/'); ?>avatarL.png" class="img-circle" alt="User Image">
+                        <img src="<?php echo base_url('upload/user/'.$this->session->userdata('foto')); ?>" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Support Team
@@ -211,7 +211,7 @@
                       </h3>
                       <div class="progress xs">
                         <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"
-                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                           <span class="sr-only">20% Complete</span>
                         </div>
                       </div>
@@ -226,7 +226,7 @@
                       </h3>
                       <div class="progress xs">
                         <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar"
-                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                           <span class="sr-only">40% Complete</span>
                         </div>
                       </div>
@@ -241,7 +241,7 @@
                       </h3>
                       <div class="progress xs">
                         <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar"
-                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                           <span class="sr-only">60% Complete</span>
                         </div>
                       </div>
@@ -256,7 +256,7 @@
                       </h3>
                       <div class="progress xs">
                         <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar"
-                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                           <span class="sr-only">80% Complete</span>
                         </div>
                       </div>
@@ -273,16 +273,16 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="<?php echo base_url('upload/'); ?>avatarL.png" class="user-image" alt="User Image">
-              <span class="hidden-xs">Aunur Rosidin</span>
+              <img src="<?php echo base_url('upload/user/'.$this->session->userdata('foto')); ?>" class="user-image" alt="User Image">
+              <span class="hidden-xs"><?php echo $this->session->userdata('nama_lengkap') ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="<?php echo base_url('upload/'); ?>avatarL.png" class="img-circle" alt="User Image">
+                <img src="<?php echo base_url('upload/user/'.$this->session->userdata('foto')); ?>" class="img-circle" alt="User Image">
 
                 <p>
-                  Aunur Rosidin - Web Developer
+                  <?php echo $this->session->userdata('nama_lengkap') ?> - Web Developer
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>
@@ -328,10 +328,10 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<?php echo base_url('upload/'); ?>avatarL.png" class="img-circle" alt="User Image">
+          <img src="<?php echo base_url('upload/user/'.$this->session->userdata('foto')); ?>" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Aunur Rosidin</p>
+          <p><?php echo $this->session->userdata('nama_lengkap') ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -625,7 +625,7 @@
   </aside>
   <!-- /.control-sidebar -->
   <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
+      immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 
 </div>
@@ -674,7 +674,7 @@
 <!-- bootstrap time picker -->
 <script src=<?php echo base_url('asset/plugins/timepicker/bootstrap-timepicker.min.js'); ?>></script>
 <!-- bootstrap fileupload -->
-<script src="http://www.cliptheme.com/preview/admin/clip-one/assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
+<script src="http://www.cliptheme.com/preview/admin/clip-one/assets/plugins/bootstrap-fileupload/user/bootstrap-fileupload.min.js"></script>
 <!-- summernote -->
 <script src="http://www.cliptheme.com/preview/admin/clip-one/assets/plugins/summernote/build/summernote.min.js"></script>
 

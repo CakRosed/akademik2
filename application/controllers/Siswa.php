@@ -126,8 +126,8 @@
 			);
 
 			if (isset($_POST['submit'])) {
-					$nisn= strip_tags(trim($this->input->post('nisn', TRUE)));
-					$foto = $this->model->get_data('foto', 'tbl_siswa', 'nisn='.$nisn)->row('foto');
+				$nisn= strip_tags(trim($this->input->post('nisn', TRUE)));
+				$foto = $this->model->get_data('foto', 'tbl_siswa', 'nisn='.$nisn)->row('foto');
 
 				// konfigurasi upload foto
 				$config['upload_path']          = './upload/siswa';
