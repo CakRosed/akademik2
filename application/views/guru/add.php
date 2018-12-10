@@ -20,7 +20,7 @@
             
               <?php 
                 echo form_open_multipart('guru/add', 'role="from"');
-               ?>
+              ?>
 
                 <!-- nisn -->
                 <div class="form-group">
@@ -160,6 +160,53 @@
                 <!-- /.input group -->
               </div>
               <!-- /.form group -->
+            
+              <div class="form-group">
+                <label>PASSWORD</label>
+
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-lock"></i>
+                  </div>
+                  <?php echo form_input(array(
+                    'type'        =>'password', 
+                    'placeholder' =>'ex. AunurRoSidin135', 
+                    'name'        =>'password', 
+                    'id'          =>'password', 
+                    'class'       =>'form-control', 
+                    'value'       => set_value('password'),
+                    )); 
+                  ?> 
+                </div>
+                <!-- /.input group -->
+              </div>
+              <!-- /.form group -->
+              
+              <div class="form-group">
+                <label>KONFIRMASI PASSWORD</label>
+
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-lock"></i>
+                  </div>
+                  <?php echo form_input(array(
+                    'type'        =>'password', 
+                    'placeholder' =>'ex. AunurRoSidin135', 
+                    'name'        =>'kpassword', 
+                    'id'          =>'kpassword', 
+                    'class'       =>'form-control', 
+                    'value'       => set_value('kpassword'),
+                    )); 
+                  ?> 
+                </div>
+                <!-- /.input group -->
+              </div>
+              <!-- /.form group -->
+
+            </div>
+            <!-- /.col -->
+
+            <div class="col-md-6">
 
               <div class="form-group">
                 <label>PENDIDIKAN TERAKHIR</label>
@@ -172,10 +219,6 @@
                   ), null, 'class="form-control"'); ?>                
               </div>
               <!-- /.form-group -->
-            </div>
-            <!-- /.col -->
-
-            <div class="col-md-6">
 
               <div class="form-group">
                 <label>JENIS KELAMIN</label>

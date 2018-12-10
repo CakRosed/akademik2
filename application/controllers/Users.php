@@ -3,6 +3,7 @@
 	function __construct(){
 		parent:: __construct();
 		$this->load->model('Model_global', 'model');
+		check_akses_modul();
 	} // end function __construct
 
 
@@ -164,20 +165,23 @@
 				</tr>
 			</thead>
 			<tbody>";
-			$modul = $this->db->get('tabel_menu');
-			$no=1;
-			foreach ($modul->result() as $row) {
-				echo 
-				"<tr>
-					<td class='text-center'>".$no++."</td>
-					<td>".strtoupper($row->nama_menu)."</td>
-					<td>".strtoupper($row->link)."</td>
-					<td wdith='30' class='text-center'><input type='checkbox' ";
-            $this->chek_akses($level, $row->id);
-            echo " onclick='addRule($row->id)'></td>
-				</tr>";
+			if ($level == 1) {
+				echo "<td class='text-center' colspan=4>ADMIN MEMPUNYAI HAK AKSES SEMUA MODUL</td>";
+			}else{
+				$modul = $this->db->get('tabel_menu');
+				$no=1;
+				foreach ($modul->result() as $row) {
+					echo 
+					"<tr>
+						<td class='text-center'>".$no++."</td>
+						<td>".strtoupper($row->nama_menu)."</td>
+						<td>".strtoupper($row->link)."</td>
+						<td wdith='30' class='text-center'><input type='checkbox' ";
+					$this->chek_akses($level, $row->id);
+					echo " onclick='addRule($row->id)'></td>
+					</tr>";
+				}
 			}
-
 		echo"</tbody>
 		</table";
 	} //end load data
@@ -199,21 +203,19 @@
 		);
 		$check  = $this->model->get_data('*', 'tbl_user_rule',$param);
 		if ($check->num_rows() < 1) {
-			$isnert = $this->db->insert('tbl_user_rule', $param);
+			$insert = $this->db->insert('tbl_user_rule', $param);
 			if ($insert) {
 				echo "<script>alert('MEMBERI AKSES')</script>";
-				redirect('users');
 			}
 		}else{
 			$where = array(
 				'id_menu'  		=> $id_modul,
-				'id_level_user'	=> $level,
+				'id_level_user'	=> $id_level,
 			);
 			$this->db->where($where);
 			$delete = $this->db->delete('tbl_user_rule');
 			if ($delete) {
 				echo "<script>alert('MENGHAPUS AKSES')</script>";
-				redirect('users');
 			}
 		}
 	} //end add_rule

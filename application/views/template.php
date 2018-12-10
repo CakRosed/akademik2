@@ -61,7 +61,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>MTS</b>Annur</span>
+      <span class="logo-lg"><b>MTS </b>| Nurus Sa'adah</span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -87,7 +87,7 @@
                   <li><!-- start message -->
                     <a href="#">
                       <div class="pull-left">
-                        <img src="<?php echo base_url('upload/user/'.$this->session->userdata('foto')); ?>" class="img-circle" alt="User Image">
+                        <img src="<?php echo base_url('upload/'.$this->session->userdata('lokasi')); ?>" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Support Team
@@ -273,13 +273,13 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="<?php echo base_url('upload/user/'.$this->session->userdata('foto')); ?>" class="user-image" alt="User Image">
+              <img src="<?php echo base_url('upload/'.$this->session->userdata('lokasi')); ?>" class="user-image" alt="User Image">
               <span class="hidden-xs"><?php echo $this->session->userdata('nama_lengkap') ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="<?php echo base_url('upload/user/'.$this->session->userdata('foto')); ?>" class="img-circle" alt="User Image">
+                <img src="<?php echo base_url('upload/'.$this->session->userdata('lokasi')); ?>" class="img-circle" alt="User Image">
 
                 <p>
                   <?php echo $this->session->userdata('nama_lengkap') ?> - Web Developer
@@ -328,11 +328,11 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<?php echo base_url('upload/user/'.$this->session->userdata('foto')); ?>" class="img-circle" alt="User Image">
+          <img src="<?php echo base_url('upload/'.$this->session->userdata('lokasi')); ?>" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p><?php echo $this->session->userdata('nama_lengkap') ?></p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          <a href="#"><i class="fa fa-circle text-success"></i> <?php echo $this->session->nama_level; ?></a>
         </div>
       </div>
       <!-- search form -->
@@ -357,8 +357,10 @@
           <?php
             
             // deklarasi mainmenu 
-            $main_menu = $this->db->get_where('tabel_menu', array('is_main_menu'=>0))->result();
-            foreach($main_menu as $main){
+            $id_level_user = $this->session->userdata('id_level_user');
+            $sql_menu = "SELECT * FROM tabel_menu WHERE id in(SELECT id_menu FROM tbl_user_rule WHERE id_level_user=$id_level_user) and  is_main_menu=0";
+            $main_menu = $this->db->query($sql_menu);
+            foreach($main_menu->result() as $main){
               
               // deklarasi submenu
               $sub_menu = $this->db->get_where('tabel_menu', array('is_main_menu'=>$main->id));
@@ -398,7 +400,8 @@
                     </li>";
               }
             }
-           ?>
+            echo "<li>".anchor('autentifikasi/check_logout', '<i class="fa fa-sign-out"></i><span>Logout</scpan>')."</li>";
+          ?>
         <!-- end navbar dinamis  -->
 
       </ul>

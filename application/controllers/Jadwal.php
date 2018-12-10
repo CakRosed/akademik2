@@ -4,22 +4,37 @@
             parent::__construct();
             $this->load->model('Model_global', 'model');
             $this->load->model('Model_jadwal', 'mjadwal');
+            check_akses_modul();
         }
 
         function index(){
-            // join query database antara tbl_info_sekolah dan tbl_jenjang_sekolah untuk mengambil jumlah kelas sesuai jenjang yang terdaftar pada tbl_sekolah_info 
-            $info_sekolah = "SELECT js.jumlah_kelas
-                             FROM tbl_jenjang_sekolah as js, tbl_sekolah_info as si
-                             WHERE js.kd_jenjang = si.kd_jenjang_sekolah";
+            if($this->session->userdata('id_level_user')==3){
+                $sql = 
+                "SELECT tj.id_jadwal,tjr.nama_jurusan,tj.kelas,tm.nama_mapel,tj.jam,tr.nama_ruangan,tj.hari,tj.semester FROM tbl_jadwal as tj, tbl_jurusan as tjr, tbl_ruangan as tr, tbl_mapel as tm WHERE tj.kd_jurusan=tjr.kd_jurusan and tj.kd_mapel=tm.kd_mapel and tj.kd_ruangan=tr.kd_ruangan and tj.id_guru=".$this->session->userdata('id_guru'); 
+                
+                $data = array(
+                'icon'          => 'fa fa-search',
+                'title'         => 'DETAIL JADWAL',
+                'parent'        => 'JADWAL',
+                'child'         => 'PENGATURAN',
+                'info'          => $this->db->query($sql)->result(),
+                );
+                $this->template->load('template', 'jadwal/jadwal_ajar', $data);
+            }else{
 
-            $data = array(
-            'icon'          => 'fa fa-search',
-            'title'         => 'DETAIL JADWAL',
-            'parent'        => 'JADWAL',
-            'child'         => 'PENGATURAN',
-            'info'          => $this->db->query($info_sekolah)->row(),
-            );
-            $this->template->load('template', 'jadwal/listt', $data);
+                $info_sekolah = "SELECT js.jumlah_kelas
+                                FROM tbl_jenjang_sekolah as js, tbl_sekolah_info as si
+                                WHERE js.kd_jenjang = si.kd_jenjang_sekolah";
+
+                $data = array(
+                'icon'          => 'fa fa-search',
+                'title'         => 'DETAIL JADWAL',
+                'parent'        => 'JADWAL',
+                'child'         => 'PENGATURAN',
+                'info'          => $this->db->query($info_sekolah)->row()
+                );
+                $this->template->load('template', 'jadwal/list', $data);
+            }
         }
         
         function generateJadwal(){
@@ -43,8 +58,25 @@
             $kelas          = strip_tags(trim($this->input->get('kelas'))); 
             $rombel         = strip_tags(trim($this->input->get('rombel'))); 
             // echo $rombel;die;
-            echo '<table class="table table-striped table-bordered" style="width:100%">
-                    <tr>
+            $sql    = "SELECT tm.nama_mapel, tg.nama_guru, tr.nama_ruangan, tj.hari, tj.jam, tj.kd_ruangan, tj.id_guru, tj.id_jadwal
+                        FROM tbl_jadwal as tj, tbl_mapel as tm, tbl_ruangan as tr, tbl_guru as tg, tbl_rombel as tb 
+                        WHERE tj.kd_mapel=tm.kd_mapel and tj.kd_ruangan=tr.kd_ruangan and tj.id_guru=tg.nuptk and tj.kelas='$kelas'
+                        and tj.kd_jurusan='$kd_jurusan' and tj.id_rombel=tb.kd_rombel and tj.id_rombel=$rombel";
+            $jadwal = $this->db->query($sql)->result();
+            $jam    = $this->mjadwal->getJamPelajaran();
+            $hari   = array(
+                'SENIN'=>'SENIN',
+                'SELASA'=>'SELASA',
+                'RABU'=>'RABU',
+                'KAMIS'=>'KAMIS',
+                'JUMAT'=>'JUMAT',
+                'SABTU'=>'SABTU',
+                'MINGGU'=>'MINGGU'
+            );
+
+            echo '<table id="example1" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
                         <th class="text-center">NO</th>
                         <th class="text-center">NAMA MATA PELAJARAN</th>
                         <th class="text-center">GURU</th>
@@ -52,23 +84,10 @@
                         <th class="text-center">HARI</th>
                         <th class="text-center">JAM</th>
                         <th class="text-center"></th>
-                    </tr>'; 
-    
-                    $sql    = "SELECT tm.nama_mapel, tg.nama_guru, tr.nama_ruangan, tj.hari, tj.jam, tj.kd_ruangan, tj.id_guru, tj.id_jadwal
-                                FROM tbl_jadwal as tj, tbl_mapel as tm, tbl_ruangan as tr, tbl_guru as tg, tbl_rombel as tb 
-                                WHERE tj.kd_mapel=tm.kd_mapel and tj.kd_ruangan=tr.kd_ruangan and tj.id_guru=tg.nuptk and tj.kelas='$kelas'
-                                and tj.kd_jurusan='$kd_jurusan' and tj.id_rombel=tb.kd_rombel and tj.id_rombel=$rombel";
-                    $jadwal = $this->db->query($sql)->result();
-                    $jam    = $this->mjadwal->getJamPelajaran();
-                    $hari   = array(
-                        'SENIN'=>'SENIN',
-                        'SELASA'=>'SELASA',
-                        'RABU'=>'RABU',
-                        'KAMIS'=>'KAMIS',
-                        'JUMAT'=>'JUMAT',
-                        'SABTU'=>'SABTU',
-                        'MINGGU'=>'MINGGU'
-                    );
+                    </tr>
+                    </thead>
+                    <tbody>'; 
+                    
                     $no     = 1;
                     foreach ($jadwal as $row) {
                         echo "<tr>
@@ -85,7 +104,8 @@
                                 <td  class='text-center'>".anchor('jadwal/deleteJadwal/'.$row->id_jadwal,'<i class="fa fa-trash"></i>', 'class="btn btn-xs btn-danger tooltips btn-flat" onconfirm')."</td>
                                 </tr>";
                     }
-            echo '</table>';
+                echo '</tbody>
+                </table>';
         } //end dataJadwal
 
         function updateGuru(){
@@ -136,17 +156,6 @@
             }
         } //end updateJamMulai
         
-        function updateJamSelesai(){
-            $jamSelesai = strip_tags(trim($this->input->get('jamSelesai')));
-            $id_jadwal  = strip_tags(trim($this->input->get('id_jadwal')));
-            $this->db->where('id_jadwal', $id_jadwal);
-            $update     = $this->db->update('tbl_jadwal', array('jam_selesai'=>$jamSelesai)); 
-            if($update){
-                echo "<script>alert('Sukses Merubah Data);</script>";
-            }else{
-                echo "<script>alert('Gagal Merubah Data!);</script>";
-            }
-        } //end updateJamSelesai
 
         function deleteJadwal(){
             $id_jadwal = $this->uri->segment(3);

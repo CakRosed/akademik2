@@ -34,7 +34,7 @@
                       <td><?php echo $row->nama; ?></td>
                       <td class="text-center"><?php echo $row->gender; ?></td>
                       <td class="text-center">
-                        <a class="btn btn-xs btn-info tooltips btn-flat" data placement="top" data-original-title="detail" href="<?php echo site_url('siswa/detail/'.$row->nisn); ?>"><i class="fa fa-eye"></i></a>
+                        <!-- <a class="btn btn-xs btn-info tooltips btn-flat" data placement="top" data-original-title="detail" href="<?php echo site_url('siswa/detail/'.$row->nisn); ?>"><i class="fa fa-eye"></i></a> -->
                         
                         <a class="btn btn-xs btn-warning tooltips btn-flat" data placement="top" data-original-title="edit" href="<?php echo site_url('siswa/edit/'.$row->nisn); ?>"><i class="fa fa-pencil-square-o"></i></a>
 

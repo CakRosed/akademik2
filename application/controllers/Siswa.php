@@ -7,9 +7,10 @@
 			parent::__construct();
 			// $this->load->library('ssp');
 			$this->load->model('Model_global', 'model');
+			check_akses_modul();
 		}
 
-		public function index(){
+		function index(){
 			$data = array(
 				'icon'  => 'fa fa-users',
 				'title' => 'DATA SISWA',
@@ -21,7 +22,7 @@
 		} 
 		// end index
 
-		public function add(){
+		function add(){
 			$data = array(
 				'icon'  => 'fa fa-users',
 				'title' => 'INPUT SISWA',
@@ -223,7 +224,7 @@
 		function siswa_aktif(){
 			$data = array(
 				'icon'  => 'fa fa-users',
-				'title' => 'INPUT SISWA',
+				'title' => 'LIST SISWA',
 				'parent'=> 'SISWA',
 				'child' => 'AKTIF' 
 			);

@@ -99,6 +99,14 @@
       data: 'jurusan='+jurusan+'&rombel='+rombel+'&kelas='+kelas,
       success:function(html){
         $("#tabel").html(html);
+        $('#example1').dataTable({
+          'paging'      : true,
+          'lengthChange': true,
+          'searching'   : true,
+          'ordering'    : true,
+          'info'        : true,
+          'autoWidth'   : true
+        });
       }
     })
   }
@@ -145,18 +153,6 @@
       type  : 'GET',
       url   : '<?php echo base_url("jadwal/updateJam"); ?>',
       data  : 'jam='+jam+'&id_jadwal='+id,
-      success:function(html){
-        $('#table').html(html);
-      }
-    });
-  }
-
-  function updateJamSelesai(id){
-    var jamSelesai  = $('#jamSelesai'+id).val();
-    $.ajax({
-      type  : 'GET',
-      url   : '<?php echo base_url("jadwal/updateJamSelesai"); ?>',
-      data  : 'jamSelesai='+jamSelesai+'&id_jadwal='+id,
       success:function(html){
         $('#table').html(html);
       }

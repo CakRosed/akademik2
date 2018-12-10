@@ -3,7 +3,8 @@ Class Tahun_akademik extends CI_Controller{
 	function __construct(){
 		parent:: __construct();
 			$this->load->model('Model_global', 'model');
-	} // end function __construct
+			check_akses_modul();
+		} // end function __construct
 
 
     function index(){
@@ -40,11 +41,10 @@ Class Tahun_akademik extends CI_Controller{
 				);
 				if ($is_aktif=='y') {
 					$param2 = array(
-						'tahun_akademik'=> $tahun,
 						'is_aktif'		=> 'n'
 					);
 					$this->db->where(array('is_aktif'=>'y'));
-					$update = $this->db->update('tbl_tahun_akademik', $param2);
+					$update2 = $this->db->update('tbl_tahun_akademik', $param2);
 				} // end cek y
 				$insert = $this->db->insert('tbl_tahun_akademik', $param);
 				
@@ -86,19 +86,18 @@ Class Tahun_akademik extends CI_Controller{
                     'is_aktif'          => $is_aktif
 				);
 			$param2 = array(
-				'tahun_akademik' => strip_tags(trim($this->input->post('tahun_akademik'))),
 				'is_aktif'		 => 'n'
 			);	
 			if ($is_aktif = 'y') {
 				$this->db->where(array('is_aktif' => $is_aktif));
-				$update2 = $this->db->update('tbl_tahun_akademik', $param2);
+				$update = $this->db->update('tbl_tahun_akademik', $param2);
 			}
             $update = $this->model->update_data($kd_tahun_akademik, 'kd_tahun_akademik', $param, 'tbl_tahun_akademik');
-			if ($update && $update2) {
-					echo "<scipt>alert('Sukses Mendaftar Mata Pelajaran');</script>";
+			if ($update && $update) {
+					echo "<scipt>alert('Sukses Mendaftar Tahun Akademik');</script>";
 					redirect('tahun_akademik');
 			}else{
-					echo "<script>alert('Gagal Mendaftar Mata Kuliah!');</script>";
+					echo "<script>alert('Gagal Mendaftar Tahun Akademik!');</script>";
 			}
         } // end if post
 

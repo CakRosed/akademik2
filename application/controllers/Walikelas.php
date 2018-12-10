@@ -3,7 +3,7 @@ Class Walikelas extends CI_Controller{
     function __construct(){
         parent::__construct();
         $this->load->model('Model_global', 'model');
-
+        check_akses_modul();
     }
 
     function index(){

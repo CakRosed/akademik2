@@ -19,7 +19,7 @@
             <div class="col-md-6">
             
               <?php 
-                echo form_open_multipart('guru/add', 'role="from"');
+                echo form_open_multipart('guru/edit', 'role="from"');
                 echo form_hidden('nuptk', $guru->nuptk);
                ?>
 
@@ -39,7 +39,7 @@
                       'class'         =>'form-control', 
                       'required'      =>'required', 
                       'value'         => $guru->nuptk,
-                      'redonly'      => 'readonly' 
+                      'readonly'       => 'readonly'
                       )); 
                     ?>
                   </div>

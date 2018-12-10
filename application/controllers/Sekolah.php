@@ -3,7 +3,8 @@
     function __construct(){
         parent:: __construct();
             $this->load->model('Model_global', 'model');
-    } // end function __construct
+            check_akses_modul();
+        } // end function __construct
 
  
     function index(){

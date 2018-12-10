@@ -3,7 +3,8 @@
  	function __construct(){
  		parent:: __construct();
  			$this->load->model('Model_global', 'model');
- 	} // end function __construct
+            check_akses_modul();
+        } // end function __construct
 
 
     function index(){
@@ -18,7 +19,7 @@
     } //end function index
 
     function add(){
-    	$data = array(
+    	$data = array( 
 				'icon'  => 'fa fa-calendar-o',
 				'title' => 'INPUT KURIKULUM',
 				'parent'=> 'KURIKULUM',
@@ -27,18 +28,25 @@
 
     	if (isset($_POST['submit'])) {
             $kurikulum  = trim($this->input->post('nama_kurikulum'));
+            $is_aktif 	= strip_tags(trim($this->input->post('is_aktif')));
     		$check      = $this->model->get_data('*', 'tbl_kurikulum', 'nama_kurikulum="'.$kurikulum.'"');
             if ($check->num_rows() > 0) {
                 echo "<script>alert('kurikulum Telah TERDAFTAR! silahkan cek ulang');</script>";
             }else{
                 $param = array(
-                    'nama_kurikulum'    => strip_tags(trim($this->input->post('nama_kurikulum'))),
-                    'is_aktif'          => strip_tags(trim($this->input->post('is_aktif')))
+                    'nama_kurikulum'    => $kurikulum,
+                    'is_aktif'          => $is_aktif
                 );
-
+                if ($is_aktif=='y') {
+					$param2 = array(
+						'is_aktif'		=> 'n' 
+					);
+					$this->db->where(array('is_aktif'=>'y'));
+					$update = $this->db->update('tbl_kurikulum', $param2);
+				} // end cek y
 
                 $simpan = $this->model->save_data($param, 'tbl_kurikulum');
-                if ($simpan) {
+                if ($simpan && $update) {
                     echo "<script>alert('Berhasil Menambah Data');</script>";
                     redirect('kurikulum');
                 }else{
@@ -60,16 +68,28 @@
     	);
 
     	if (isset($_POST['submit'])) {
-    		$id_kurikulum 	= strip_tags(trim($this->input->post('id_kurikulum', TRUE)));
+            $id_kurikulum 	= strip_tags(trim($this->input->post('id_kurikulum', TRUE)));
+            $kurikulum      = trim($this->input->post('nama_kurikulum'));
+            $is_aktif 	    = strip_tags(trim($this->input->post('is_aktif')));
     		$param = array(
                     'id_kurikulum'      => $id_kurikulum,
-                    'nama_kurikulum'    => trim($this->input->post('nama_kurikulum')),
-                    'is_aktif'          => strip_tags(trim($this->input->post('is_aktif')))
+                    'nama_kurikulum'    => $kurikulum,
+                    'is_aktif'          => $is_aktif
                 );
-            // print_r($param); die;
+            $param2 = array(
+                'is_aktif'		 => 'n'
+            );
+
+            if ($is_aktif=='y') {
+                $param2 = array(
+                    'is_aktif'		=> 'n'
+                );
+                $this->db->where(array('is_aktif'=>'y'));
+                $update2 = $this->db->update('tbl_kurikulum', $param2);
+            } // end cek y
 
             $update = $this->model->update_data($id_kurikulum, 'id_kurikulum', $param, 'tbl_kurikulum');
-    	   if ($update) {
+    	   if ($update && $update2) {
                 echo "<scipt>alert('Sukses Mendaftar Mata Pelajaran');</script>";
                 redirect('kurikulum');
            }else{
@@ -83,7 +103,7 @@
     function delete(){
     	$id_kurikulum = $this->uri->segment(3);
     	if (!empty($id_kurikulum)) {
-    		$delete = $this->model->delete_data($kd_kurikulum, 'kd_kurikulum', 'tbl_kurikulum');
+    		$delete = $this->model->delete_data($id_kurikulum, 'id_kurikulum', 'tbl_kurikulum');
     		if ($delete) {
     			echo "<script>alert('Sukses Menghapus Data');</script>";
     			redirect('kurikulum');
