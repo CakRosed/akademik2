@@ -34,7 +34,7 @@
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href= <?php echo base_url('asset/dist/css/skins/_all-skins.min.css'); ?>>
   <!-- fuleupload -->
-  <link type="text/css" rel="stylesheet" href="http://www.cliptheme.com/preview/admin/clip-one/assets/plugins/bootstrap-fileupload/user/bootstrap-fileupload.min.css" />
+  <link type="text/css" rel="stylesheet" href="<?php echo base_url('asset/plugins/bootstrap-fileupload.min.css'); ?>" />
 
 
   <!-- jQuery 3 -->
@@ -677,7 +677,7 @@
 <!-- bootstrap time picker -->
 <script src=<?php echo base_url('asset/plugins/timepicker/bootstrap-timepicker.min.js'); ?>></script>
 <!-- bootstrap fileupload -->
-<script src="http://www.cliptheme.com/preview/admin/clip-one/assets/plugins/bootstrap-fileupload/user/bootstrap-fileupload.min.js"></script>
+<script src="<?php echo base_url('asset/plugins/bootstrap-fileupload.min.js'); ?>"></script>
 <!-- summernote -->
 <script src="http://www.cliptheme.com/preview/admin/clip-one/assets/plugins/summernote/build/summernote.min.js"></script>
 

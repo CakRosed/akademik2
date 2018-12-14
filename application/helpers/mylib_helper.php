@@ -45,6 +45,7 @@
 				and $method!='updateHari' 
 				and $method!='updateJam' 
 				and $method!='deleteJadwal' 
+				and $method!='rombel' 
 				and $method!='showRombel' 
 				and $method!='cetak_jadwal'
 				and $method!='add' 

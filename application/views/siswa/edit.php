@@ -19,7 +19,7 @@
             
               <?php 
                 echo form_open_multipart('siswa/edit', 'role="from"');
-                echo form_hidden('nisn', $siswa->nisn);
+                echo form_hidden('nis', $siswa->nis);
                ?>
 
                 <!-- nisn -->
@@ -242,9 +242,7 @@
                </div>
                 <!-- /.input group -->
               </div>
-              <!-- /.form group -->
-
-
+              <!-- /.form group --> 
 
             <div class="row">              
               <div class="col-md-4 col-sm-12">
