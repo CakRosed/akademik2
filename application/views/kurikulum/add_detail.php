@@ -18,7 +18,7 @@
             
               <?php 
                 echo form_open_multipart('kurikulum/adddetail/'.$this->uri->segment(3), 'role="from"');
-               ?>
+              ?>
 
                 <!--  -->
                 <div class="form-group">
@@ -29,20 +29,6 @@
                       <i class="fa fa-book"></i>
                     </div>
                     <?php echo cmb_dinamis('mapel', 'tbl_mapel', 'nama_mapel', 'kd_mapel'); ?>
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
-                <!--  -->
-                <div class="form-group">
-                  <label>JURUSAN</label>
- 
-                  <div class="input-group">
-                    <div class="input-group-addon">
-                      <i class="fa fa-sitemap"></i>
-                    </div>
-                    <?php echo cmb_dinamis('jurusan', 'tbl_jurusan', 'nama_jurusan', 'kd_jurusan'); ?>
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -65,7 +51,6 @@
                   <!-- /.input group -->
                 </div>
                 <!-- /.form group -->
-       
 
               <!-- /.col -->
               <div class="col-md-6"><br>

@@ -15,6 +15,7 @@
                     <!-- <th class="text-center">KODE TAHUN AKADEMIK</th> -->
                     <th class="text-center">TAHUN AKADEMIK</th>
                     <th class="text-center">TAHUN AKADEMIK AKTIF</th>
+                    <th class="text-center">SEMESTER AKTIF</th>
                     <!-- <th class="text-center">SEMESTER AKTIF</th> -->
                     <th class="text-center">MENU</th>
                   </tr>
@@ -27,7 +28,7 @@
                       <td class="text-center"><?php echo $no ++?></td>
                       <td class="text-center"><?php echo $row->tahun_akademik; ?></td>
                       <td class="text-center"><?php echo $row->is_aktif=='y'?'AKTIF':'TIDAK AKTIF'; ?></td>
-                      <!-- <td class="text-center"><?php echo $row->semester_aktif; ?></td> -->
+                      <td class="text-center"><?php echo $row->semester_aktif=='1'?'SEMESTER 1':'SEMESTER 2'; ?></td>
                       <td class="text-center">
                         <!-- <a class="btn btn-xs btn-info tooltips btn-fla t" data placement="top" data-original-title="detail" href="<?php echo site_url('tahun_akademik/detail/'.$row->kd_tahun_akademik); ?>"><i class="fa fa-eye"></i></a> --> 
                         <a class="btn btn-xs btn-warning tooltips btn-flat" data placement="top" data-original-title="edit" href="<?php echo site_url('tahun_akademik/edit/'.$row->kd_tahun_akademik); ?>"><i class="fa fa-pencil-square-o"></i></a>

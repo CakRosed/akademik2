@@ -14,10 +14,6 @@
                     <td>JURUSAN</td>
                     <td><?php echo $info->nama_jurusan." KELAS ".$info->kelas. " (".$info->nama_rombel.")"; ?></td>
                 </tr>
-                <tr>
-                    <td>MATA PELAJARAN</td>
-                    <td><?php echo $info->nama_mapel; ?></td>
-                </tr>
             </table>
         </div>    
     </div> 
@@ -39,11 +35,11 @@
                         foreach ($siswa as $row) {
                             echo 
                             "<tr>
-                                <td width=50 class='text-center'>".$no++."</td>
+                                <td class='text-center'>".$no++."</td>
                                 <td class='text-center'>".$row->nis."</td>
                                 <td>".$row->nama."</td>
-                                <td width=100 class='text-center'>
-                                    <input type='int' class='form-control' onkeyup='updateNilai(\"$row->nisn\")' id='nilai".$row->nisn."' value='".check_nilai($row->nisn, $this->uri->segment(3))."'>
+                                <td class='text-center'>
+                                    <a href='".base_url('raport/nilai_semester/'.$row->nisn)."' class='btn btn-success btn-xs btn-flat'>LIHAT NILAI</a>
                                 </td>
                             </tr>";
                         }
@@ -56,7 +52,6 @@
 </div>
 
 <script type="text/javascript">
-    
     function updateNilai(nisn){
     var nilai = $('#nilai'+nisn).val();
         $.ajax({

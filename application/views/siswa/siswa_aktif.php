@@ -11,14 +11,22 @@
             $kd_rombel = $rombel;
             $kd_jurusan= $jurusan; 
           }else{
-            $kd_rombel = null;
+            $kd_rombel = null; 
             $kd_jurusan= null;
           }
         ?>
         <table class="table table-bordered" style="width:100%">
           <tr>
-            <td>JURUSAN</td>
-            <td><?php echo cmb_dinamis('jurusan', 'tbl_jurusan', 'nama_jurusan', 'kd_jurusan',$kd_jurusan, 'id="jurusan" onchange="loadRombel()"'); ?></td>
+            <td>KELAS</td>
+            <td>
+              <select class="form-control" name="kelas" id="kelas" onchange="loadRombel()">
+                <?php 
+                  for ($i=1; $i <= $info->jumlah_kelas ; $i++) { 
+                    echo "<option value='$i'>KELAS $i</option>";
+                  }
+                ?>
+              </select>
+            </td>
           </tr>
             <td>ROMBONGAN BELAJAR</td>
             <td><div id="showRombel"></div></td>
@@ -34,7 +42,7 @@
     </div> <!-- endbox -->
   </div> <!-- end col -->
 
-  <div class="col-md-12">
+  <div class="col-md-12"> 
     <div class="box">
       <!-- /.box-header -->
       <div class="box-body">
@@ -54,12 +62,12 @@
 
 <script>
   function loadRombel(){
-    var jurusan = $('#jurusan').val();
+    var kelas = $('#kelas').val();
     var rombel  = '<?php $selected=$this->uri->segment(3); if(!empty($selected)){echo $selected;}else{echo "";} ?>';
     $.ajax({
       type   : 'GET',
       url    : '<?php echo base_url("siswa/showRombel/"); ?>',
-      data   : 'jurusan='+jurusan+'&rombel='+rombel,
+      data   : 'kelas='+kelas+'&rombel='+rombel,
       success:function(html){
         $('#showRombel').html(html);
         loadData();

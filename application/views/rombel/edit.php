@@ -18,8 +18,8 @@
             
               <?php  
                 echo form_open_multipart('rombel/edit/'.$this->uri->segment(3), 'role="from"');
-               ?>
-     
+              ?>
+
                 <!-- nama -->
                 <div class="form-group">
                   <label>NAMA ROMBONGAN BELAJR</label>
@@ -61,20 +61,6 @@
               </div>
               <!-- /.form group -->
 
-              <!-- jurusan -->
-                <div class="form-group">
-                  <label>JURUSAN</label>
-
-                  <div class="input-group">
-                    <div class="input-group-addon">
-                      <i class="fa fa-sitemap"></i>
-                    </div>
-                    <?php echo cmb_dinamis('jurusan','tbl_jurusan', 'nama_jurusan', 'kd_jurusan', $rombel->kd_jurusan); ?>
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
               <!-- /.col -->
               <div class="col-md-6"><br>
                 <p>anda telah menyetujui data dengan menekan tombol <span style="font-weight: bold">daftar </span><i class="fa fa-check"></i></p>
@@ -83,7 +69,7 @@
                     'type'=>'submit', 
                     'name'=>'submit',  
                     'class'=>'btn btn-block btn-success btn-flat',
-                    'value'=> 'DAFTAR' 
+                    'value'=> 'EDIT' 
                     )); 
                   ?>
 

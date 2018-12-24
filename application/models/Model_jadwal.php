@@ -1,54 +1,27 @@
 <?php
     Class Model_jadwal extends CI_Model{
         
-        function ressetJadwal(){
-            $id_kurikulum    = strip_tags(trim($this->input->post('kurikulum')));
-            $semester        = strip_tags(trim($this->input->post('semester')));
-            $kurikulum_detail= $this->db->get_where('tbl_kurikulum_detail', array('kd_kurikulum' =>$id_kurikulum));
-            foreach ($kurikulum_detail->result() as $row) {
-                $where	= array(
-                    'kd_jurusan'    => $row->kd_jurusan,
-                    'kelas'         => $row->kelas,
-                    'semester'      => $semester,
-                );
-                $delete = $this->db->delete('tbl_jadwal', $where);
-            }
-            if ($delete) {
-                echo "<script>alert('Sukses Reset Jadwal');</script>";
-            }else{
-                echo "<script>alert('Gagal Reset Jadwal');</script>";
-            }
-            redirect('jadwal');
-        } //end resetJadwal
-
-        function generateJadwal(){
+        function generateJadwal(){ 
             $id_kurikulum   = strip_tags(trim($this->input->post('kurikulum')));
-            $semester       = strip_tags(trim($this->input->post('semester')));
+            $semester       = get_tahun_akademik_aktif('semester_aktif');
             //ambil data berdasarkan kurikulum yang  dipilih
             $kurikulum_detail = $this->db->get_where('tbl_kurikulum_detail', array('kd_kurikulum'=>$id_kurikulum));
-            // ambil tahun akademik aktif 
-            $tahun_akademik = $this->db->get_where('tbl_tahun_akademik', array('is_aktif'=>'y'))->row_object();
+            
             foreach($kurikulum_detail->result() as $row){
-                //dapatkan rombel base on jurusan
-                $where = array(
-                    'kd_jurusan' => $row->kd_jurusan,
-                    'kelas'      => $row->kelas
-                );
-                $rombel = $this->model->get_data('*', 'tbl_rombel', $where);
+                $rombel = $this->db->get_where('tbl_rombel', array('kelas' => $row->kelas));
                 foreach($rombel->result() as $rows){
-                    $data = array(
-                        'id_tahun_akademik'     => $tahun_akademik->kd_tahun_akademik,
-                        'kd_jurusan'            => $row->kd_jurusan, 
-                        'kelas'                 => $row->kelas,
-                        'kd_mapel'              => $row->kd_mapel,
-                        'id_guru'               => '1',
-                        'jam'                   => '',
-                        'kd_ruangan'            => '1',
-                        'semester'              => $semester,
-                        'hari'                  => '',
-                        'id_rombel'             => $rows->kd_rombel
+                    $param = array(
+                            'id_tahun_akademik'     => get_tahun_akademik_aktif('kd_tahun_akademik'), 
+                            'kelas'                 => $row->kelas,
+                            'kd_mapel'              => $row->kd_mapel,
+                            'id_guru'               => '1',
+                            'jam'                   => '',
+                            'kd_ruangan'            => '1',
+                            'semester'              => $semester,
+                            'hari'                  => '',
+                            'id_rombel'             => $rows->kd_rombel
                     );
-                    $insert= $this->db->insert('tbl_jadwal', $data);
+                    $insert= $this->db->insert('tbl_jadwal', $param);
                 } //end foreach rombel
             } //end foreach kurikulum detail
             if($insert){

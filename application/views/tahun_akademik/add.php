@@ -18,7 +18,7 @@
             
               <?php 
                 echo form_open_multipart('tahun_akademik/add', 'role="from"');
-               ?>
+              ?>
 
                 <!-- nisn -->
                 <div class="form-group">
@@ -35,7 +35,7 @@
                       'id'            =>'tahun_akademik', 
                       'class'         =>'form-control', 
                       'required'      =>'required', 
-                      'value'         => set_value('kd_tahun_akademik') 
+                      'value'         => set_value('tahun_akademik') 
                       )); 
                     ?>
                   </div>
@@ -52,6 +52,20 @@
                     <i class="fa fa-check-square-o"></i>
                   </div>
                   <?php echo form_dropdown('is_aktif', array('y'=>'AKTIF', 'n'=>'TIDAK AKTIF'), null, 'class="form-control"') ?>
+                </div>
+                <!-- /.input group -->
+              </div>
+              <!-- /.form group -->
+
+              <!-- nama  -->
+              <div class="form-group">
+                <label>SEMESTER YANG AKTIF</label>
+
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-check-square-o"></i>
+                  </div>
+                  <?php echo form_dropdown('semester_aktif', array('1'=>'SEMESTER 1', '2'=>'SEMESTER 2 '), null, 'class="form-control"') ?>
                 </div>
                 <!-- /.input group -->
               </div>

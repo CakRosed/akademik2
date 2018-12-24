@@ -2,15 +2,15 @@
     class Jadwal extends CI_Controller{
         function __construct(){
             parent::__construct();
-            $this->load->model('Model_global', 'model');
-            $this->load->model('Model_jadwal', 'mjadwal');
+            $this->load->model('Model_jadwal', 'model');
             check_akses_modul();
         }
 
         function index(){
             if($this->session->userdata('id_level_user')==3){
-                $sql = 
-                "SELECT tj.id_jadwal,tjr.nama_jurusan,tj.kelas,tm.nama_mapel,tj.jam,tr.nama_ruangan,tj.hari,tj.semester FROM tbl_jadwal as tj, tbl_jurusan as tjr, tbl_ruangan as tr, tbl_mapel as tm WHERE tj.kd_jurusan=tjr.kd_jurusan and tj.kd_mapel=tm.kd_mapel and tj.kd_ruangan=tr.kd_ruangan and tj.id_guru=".$this->session->userdata('id_guru'); 
+                $sql = "SELECT tj.id_jadwal,tjr.nama_jurusan,tj.kelas,tm.nama_mapel,tj.jam,tr.nama_ruangan,tj.hari,tj.semester 
+                        FROM tbl_jadwal as tj, tbl_ruangan as tr, tbl_mapel as tm 
+                        WHERE tj.kd_mapel=tm.kd_mapel and tj.kd_ruangan=tr.kd_ruangan and tj.id_guru=".$this->session->userdata('id_guru'); 
                 
                 $data = array(
                 'icon'          => 'fa fa-search',
@@ -21,7 +21,6 @@
                 );
                 $this->template->load('template', 'jadwal/jadwal_ajar', $data);
             }else{
-
                 $info_sekolah = "SELECT js.jumlah_kelas
                                 FROM tbl_jenjang_sekolah as js, tbl_sekolah_info as si
                                 WHERE js.kd_jenjang = si.kd_jenjang_sekolah";
@@ -39,31 +38,29 @@
         
         function generateJadwal(){
             if(isset($_POST['submit'])){
-                $this->mjadwal->generateJadwal();
+                $this->model->generateJadwal();
             }else{ 
                 redirecr('jadwal');
             }
         } //end generate
 
         function ressetJadwal(){
-            if (isset($_POST['submit'])) {
-                $this->mjadwal->ressetJadwal();
-            }else{
+            $delete = $this->db->empty_table('tbl_jadwal');
+            if ($delete) {
                 redirect('jadwal');
             }
         }
 
         function dataJadwal(){
-            $kd_jurusan     = strip_tags(trim($this->input->get('jurusan')));
             $kelas          = strip_tags(trim($this->input->get('kelas'))); 
             $rombel         = strip_tags(trim($this->input->get('rombel'))); 
             // echo $rombel;die;
             $sql    = "SELECT tm.nama_mapel, tg.nama_guru, tr.nama_ruangan, tj.hari, tj.jam, tj.kd_ruangan, tj.id_guru, tj.id_jadwal
                         FROM tbl_jadwal as tj, tbl_mapel as tm, tbl_ruangan as tr, tbl_guru as tg, tbl_rombel as tb 
                         WHERE tj.kd_mapel=tm.kd_mapel and tj.kd_ruangan=tr.kd_ruangan and tj.id_guru=tg.nuptk and tj.kelas='$kelas'
-                        and tj.kd_jurusan='$kd_jurusan' and tj.id_rombel=tb.kd_rombel and tj.id_rombel=$rombel";
+                        and tj.id_rombel=tb.kd_rombel and tj.id_rombel=$rombel";
             $jadwal = $this->db->query($sql)->result();
-            $jam    = $this->mjadwal->getJamPelajaran();
+            $jam    = $this->model->getJamPelajaran();
             $hari   = array(
                 'SENIN'=>'SENIN',
                 'SELASA'=>'SELASA',
@@ -160,7 +157,8 @@
         function deleteJadwal(){
             $id_jadwal = $this->uri->segment(3);
             if (!empty($id_jadwal)) {
-                $delete = $this->model->delete_data($id_jadwal, 'id_jadwal', 'tbl_jadwal');
+                $this->db->where('id_jadwal', $id_jadwal);
+                $delete = $this->db->delete('tbl_jadwal');
                 if ($delete) {
                     echo "<script>alert('Sukses Menghapus Data');</script>";
                     redirect('jadwal');
@@ -172,11 +170,8 @@
 
         function showRombel(){
             echo "<select id='rombel' name='rombel' class='form-control' onchange='loadPelajaran()'>";
-                $select = array(
-                    'kelas'      => strip_tags(trim($this->input->get('kelas'))), 
-                    'kd_jurusan' => strip_tags(trim($this->input->get('jurusan')))
-                );
-                $rombel = $this->model->get_data('*', 'tbl_rombel', $select);
+                $kelas  = strip_tags(trim($this->input->get('kelas')));
+                $rombel = $this->db->get_where('tbl_rombel', array('kelas' => $kelas));
                 foreach($rombel->result() as $row){
                     echo "<option value='$row->kd_rombel'>$row->nama_rombel</option>";
                 }
@@ -193,20 +188,21 @@
             $pdf->Cell(15,10,'NO.',1,0,'C');
             $pdf->Cell(32,10,'WAKTU',1,0,'C');
             // forach di kolom judul
-            $days       = $this->mjadwal->getHari();
+            $days       = $this->model->getHari();
             foreach ($days as $day) {
                 $pdf->Cell(32,10,$day,1,0,'C');
             }
             $pdf->Cell(32,10,'',0,1,'C'); //untuk enter
 
-            $jam_ajar   = $this->mjadwal->getJamPelajaran();
+            $jam_ajar   = $this->model->getJamPelajaran();
             $no = 1;
             foreach ($jam_ajar as $jam) {
                 $pdf->Cell(15,10,$no,1,0,'C');
                 $pdf->Cell(32,10,$jam,1,0,'L');
                 //foreach hari di kolom jadwal
                 foreach ($days as $day){
-                    $pelajaran = $this->model->get_data('tj.*, tm.nama_mapel', 'tbl_mapel as tm, tbl_jadwal as tj', 'tj.kd_mapel=tm.kd_mapel and tj.hari="'.$day.'" and tj.jam="'.$jam.'" and id_rombel='.$rombel);
+                    $where_select   = array();
+                    $pelajaran = $this->db->get_where('tbl_mapel as tm, tbl_jadwal as tj, tbl'); $this->model->get_data('tj.*, tm.nama_mapel', 'tbl_mapel as tm, tbl_jadwal as tj', 'tj.kd_mapel=tm.kd_mapel and tj.hari="'.$day.'" and tj.jam="'.$jam.'" and id_rombel='.$rombel);
                     if ($pelajaran->num_rows()>0) {
                         foreach ($pelajaran->result() as $mapel) {
                             $pdf->SetFont('Arial','',8);

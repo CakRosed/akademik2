@@ -18,8 +18,8 @@
             
               <?php 
                 echo form_open_multipart('tahun_akademik/edit', 'role="from"');
-                echo form_hidden('kd_tahun_akademik', $tahun_akademik->kd_tahun_akademik);
-               ?>
+                echo form_hidden('kd_tahun_akademik',$tahun_akademik->kd_tahun_akademik);
+              ?>
 
                 <!-- nisn -->
                 <div class="form-group">
@@ -44,7 +44,7 @@
                 </div>
                 <!-- /.form group -->
 
-              <!-- nama  -->
+              <!-- is_aktif  -->
               <div class="form-group">
                 <label>TAHUN AKADEMIK AKTIF</label>
 
@@ -53,6 +53,20 @@
                     <i class="fa fa-check-square-o"></i>
                   </div>
                   <?php echo form_dropdown('is_aktif', array('y'=>'AKTIF', 'n'=>'TIDAK AKTIF'), $tahun_akademik->is_aktif, 'class="form-control"'); ?>  
+                </div>
+                <!-- /.input group -->
+              </div>
+              <!-- /.form group -->
+
+              <!-- semester aktif  -->
+              <div class="form-group">
+                <label>SEMESTER YANG AKTIF</label>
+
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-check-square-o"></i>
+                  </div>
+                  <?php echo form_dropdown('semester_aktif', array('1'=>'SEMESTER 1', '2'=>'SEMESTER 2'), $tahun_akademik->semester_aktif, 'class="form-control"'); ?>  
                 </div>
                 <!-- /.input group -->
               </div>

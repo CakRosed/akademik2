@@ -6,10 +6,6 @@
         <?php echo form_open('jadwal/cetak_jadwal'); ?>
         <table class="table table-bordered" style="width:100%">
           <tr>
-            <td>JURUSAN</td>
-            <td><?php echo cmb_dinamis('jurusan', 'tbl_jurusan', 'nama_jurusan', 'kd_jurusan',null, 'id="jurusan" onChange="loadRombel()"'); ?></td>
-          </tr>
-          <tr>
             <td>KELAS</td>
             <td>
               <select class="form-control" name="kelas" id="kelas" onchange="loadRombel()">
@@ -43,14 +39,14 @@
         <div style="margin-left:15px; margin-bottom:15px;">
           <i class="fa fa-cogs fa-5x"></i><br>
         </div>
-        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+        <button class="btn btn-primary btn-sm btn-flat" data-toggle="modal" data-target="#myModal">
           Generate Jadwal
         </button>
         <br><br>
         <div style="margin-left:8px;">
-          <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal2">
+          <a href="<?php echo base_url('jadwal/ressetJadwal'); ?>" class="btn btn-danger btn-flat btn-sm">
             Resset Jadwal
-          </button>
+          </a>
         </div>  
       </div>
     </div>
@@ -81,7 +77,7 @@
     $.ajax({
       type  : 'GET',
       url   : '<?php echo base_url("jadwal/showRombel"); ?>',
-      data  : 'kelas='+kelas+'&jurusan='+jurusan,
+      data  : 'kelas='+kelas, 
       success:function(html){
         $('#showRombel').html(html);
         loadPelajaran();
@@ -96,7 +92,7 @@
     $.ajax({
       type:'GET',
       url : '<?php echo base_url("jadwal/dataJadwal"); ?>',
-      data: 'jurusan='+jurusan+'&rombel='+rombel+'&kelas='+kelas,
+      data: 'rombel='+rombel+'&kelas='+kelas,
       success:function(html){
         $("#tabel").html(html);
         $('#example1').dataTable({
@@ -180,45 +176,11 @@
             <td>KURIKULUM</td>
             <td><?php echo cmb_dinamis('kurikulum', 'tbl_kurikulum', 'nama_kurikulum', 'id_kurikulum'); ?></td>
           </tr>
-          <tr>
-            <td>SEMESTER</td>
-            <td><?php echo form_dropdown('semester',  array('1'=>'SEMESTER 1', '2'=>'SEMESTER 2'), null, 'CLASS="form-control"'); ?></td>
-          </tr>
         </table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="submit" name="submit" class="btn btn-primary">SIMPAN</button>
-      </div>
-      </form>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal --> 
-
-<!-- Modal -->
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <?php echo form_open('jadwal/ressetJadwal'); ?>
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Resset Jadwal</h4>
-      </div>
-      <div class="modal-body">
-        <table class="table table-bordered ">
-          <tr>
-            <td>KURIKULUM</td>
-            <td><?php echo cmb_dinamis('kurikulum', 'tbl_kurikulum', 'nama_kurikulum', 'id_kurikulum'); ?></td>
-          </tr>
-          <tr>
-            <td>SEMESTER</td>
-            <td><?php echo form_dropdown('semester',  array('1'=>'SEMESTER 1', '2'=>'SEMESTER 2'), null, 'CLASS="form-control"'); ?></td>
-          </tr>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" name="submit" class="btn btn-danger">RESSET</button>
       </div>
       </form>
     </div><!-- /.modal-content -->

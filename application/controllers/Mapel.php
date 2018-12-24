@@ -1,13 +1,13 @@
 <?php 
  Class Mapel extends CI_Controller{
  	function __construct(){
- 		parent:: __construct();
- 			$this->load->model('Model_global', 'model');
+		parent:: __construct();
+		$this->load->model('Model_global', 'model');
 			check_akses_modul();
 		} // end function __construct
 
 
-    function index(){
+    function index(){ 
     	$data = array(
 				'icon'  => 'fa fa-book',
 				'title' => 'DATA MAPEL',

@@ -5,10 +5,6 @@
       <div class="box-body">
         <table class="table table-bordered" style="width:100%">
           <tr>
-            <td>JURUSAN</td>
-            <td><?php echo cmb_dinamis('jurusan', 'tbl_jurusan', 'nama_jurusan', 'kd_jurusan',null, 'id="jurusan" onChange="loadData()"'); ?></td>
-          </tr>
-          <tr>
             <td>KELAS</td>
             <td>
               <select class="form-control" name="kelas" id="kelas" onchange="loadData()">
@@ -17,7 +13,7 @@
                   for ($i=1; $i <= $info->jumlah_kelas ; $i++) { 
                     echo "<option value='$i'>KELAS $i</option>";
                   }
-                 ?>
+                ?>
               </select>
             </td>
           </tr>
@@ -26,7 +22,7 @@
               <a href="<?php echo base_url('kurikulum/adddetail/'.$this->uri->segment(3)); ?>" type="button" class="btn btn-block btn-success btn-flat"><i class="fa fa-plus"></i> TAMBAH DETAIL</a>
             </td>
           </tr>
-       </table>
+        </table>
       </div> <!-- /.box-body -->
     </div> <!-- endbox -->
   </div> <!-- end col 4-->
@@ -51,15 +47,22 @@
 
 <script>
   function loadData(){
-    var jurusan   = $('#jurusan').val();
     var kelas     = $('#kelas').val();
     var kd_jurusan= <?php echo $this->uri->segment(3); ?> 
     $.ajax({
       type:'GET',
       url : '<?php echo base_url() ?>kurikulum/dataKurikulumDetail/<?php echo $this->uri->segment(3) ?>',
-      data: 'jurusan='+jurusan+'&kelas='+kelas,
+      data: 'kelas='+kelas,
       success:function(html){
         $("#tabel").html(html);
+        $('#example1').dataTable({
+          'paging'      : true,
+          'lengthChange': true,
+          'searching'   : true,
+          'ordering'    : true,
+          'info'        : true,
+          'autoWidth'   : true
+        });
       }
     })
   }

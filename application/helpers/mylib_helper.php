@@ -40,6 +40,7 @@
 				and $method!='generateJadwal' 
 				and $method!='ressetJadwal' 
 				and $method!='dataJadwal' 
+				and $method!='dataWalikelas' 
 				and $method!='updateGuru' 
 				and $method!='updateRuangan' 
 				and $method!='updateHari' 
@@ -55,10 +56,12 @@
 				and $method!='dataKurikulumDetail' 
 				and $method!='deleteDetail'
 				and $method!='addDetail'
+				and $method!='adddetail'
 				and $method!='loadData'
 				and $method!='add_rule' 
 				and $method!='chek_akses' 
 				and $method!='rule'
+				and $method!='update'
 				and $method!='update_walikelas') {
 			echo"<h3><i class='fa fa-warning text-red'></i> Oops! Anda tidak mempunyai hak akases ke halaman ini.</h3>
 				<p>
@@ -71,11 +74,24 @@
 		
 	} //endd
 
-
 	function get_tahun_akademik_aktif($field) {
 		$ci = & get_instance();
 		$ci->db->where('is_aktif', 'y');
 		$tahun = $ci->db->get('tbl_tahun_akademik')->row_array();
 		return $tahun[$field];
 	} //end get tahun akademik aktif
+
+	function check_nilai($nisn, $id_jadwal){
+		$ci 	=& get_instance();
+		$where  = array(
+			'nisn' 		=> $nisn,
+			'id_jadwal'	=> $id_jadwal
+		);
+		$nilai 	= $ci->db->get_where('tbl_nilai', $where);
+		if ($nilai->num_rows() >0) {
+			return $nilai->row('nilai');
+		}else{
+			return 0;
+		}
+	} //end check nilai
 ?> 

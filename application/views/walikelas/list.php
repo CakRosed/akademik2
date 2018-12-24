@@ -1,45 +1,35 @@
 
 <div class="box">
     <div class="box-header">
-        <div class='btn btn-warning col-md-12'><?php echo "<h5>TAHUN AKADEMIK ".$tahun_akademik->tahun_akademik." SEMESTER ".$tahun_akademik->semester_aktif."</h5>"; ?></div>
+        <div class="col-md-2"><h5>TAHUN AKADEMIK : </h5></div>
+        <div class="col-md-3">
+            <?php echo cmb_dinamis('tahun_akademik', 'tbl_tahun_akademik', 'tahun_akademik', 'kd_tahun_akademik', get_tahun_akademik_aktif('kd_tahun_akademik'), 'class="form-control" id="tahun_akademik" onchange="loadWalikelas()"'); ?>
+        </div>
+        <div class="col-md-3">                
+            <a href="<?php echo base_url('walikelas/add'); ?>" type="button" class="btn btn-block btn-success btn-flat"><i class="fa fa-plus"></i> INPUT DATA WALIKELAS</a>
+        </div> 
     </div>
     <div class="box-body">
-        <table	id='example1' class="table table-striped table-bordered table-responsive table-hover table-full-width">
-            <thead>
-                <tr>
-                    <th class="text-center">NO.</th>
-                    <th class="text-center">ROMBONGAN BELAJAR</th>
-                    <th class="text-center">JURUSAN</th>
-                    <th class="text-center">KELAS</th>
-                    <th class="text-center">NAMA WALIKELAS</th>
-                </tr>
-            </thead>
-            <tbody>
-                    <?php
-                        $no=1;
-                        foreach ($data as $row) {
-                            echo 
-                            '<tr>
-                            <td class="text-center">'.$no++.'</td>
-                            <td class="text-center">'.$row->nama_rombel.'</td>
-                            <td class="text-center">'.$row->nama_jurusan.'</td>
-                            <td class="text-center">'.$row->kelas.'</td>
-                            <td class="text-center">'.cmb_dinamis('guru', 'tbl_guru', 'nama_guru', 'nuptk', $row->nuptk, 'id="guru" class="form-control" onchange="update_guru('.$row->id_walikelas.')"').'</td>
-                            </tr>';
-                        }
-                    ?>
-            </tbody>
-        </table>
+        <div id="table"></div>
     </div>
 </div>
 
-<script type="text/javascript">
-    function update_guru(id_walikelas){
-        var id_guru	     = $('#guru').val();
+<script type='text/javascript'>
+    $(document).ready(function(){
+        loadWalikelas();
+    });
+</script>
+
+<script>
+    function loadWalikelas(){
+        var tahun_akademik  = $('#tahun_akademik').val();
         $.ajax({
-            type   : 'GET',
-            url    : '<?php echo base_url("walikelas/update_walikelas"); ?>',
-            data   : 'id_walikelas='+id_walikelas+'&id_guru='+id_guru
+            type : 'GET',
+            url  : '<?php echo base_url("walikelas/loadData"); ?>',
+            data : 'tahun_akademik='+tahun_akademik,
+            success:function(html){
+                $('#table').html(html);
+            }
         });
     }
 </script>

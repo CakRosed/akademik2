@@ -61,20 +61,6 @@
               </div>
               <!-- /.form group -->
 
-              <!-- jurusan -->
-                <div class="form-group">
-                  <label>JURUSAN</label>
-
-                  <div class="input-group">
-                    <div class="input-group-addon">
-                      <i class="fa fa-sitemap"></i>
-                    </div>
-                    <?php echo cmb_dinamis('jurusan','tbl_jurusan', 'nama_jurusan', 'kd_jurusan'); ?>
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
               <!-- /.col -->
               <div class="col-md-6"><br>
                 <p>anda telah menyetujui data dengan menekan tombol <span style="font-weight: bold">daftar </span><i class="fa fa-check"></i></p>

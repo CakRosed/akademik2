@@ -21,7 +21,6 @@
                     <tr>
                     <th class="text-center">NO.</th>
                     <th class="text-center">KELAS</th>
-                    <th class="text-center">JURUSAN</th>
                     <th class="text-center">MATAPELAJARAN</th>
                     <th class="text-center">HARI</th>
                     <th class="text-center">JAM</th>
@@ -37,12 +36,11 @@
                         echo "<tr>
                             <td class='text-center'>".$no++."</td>
                             <td class='text-center'>".$row->kelas."</td> 
-                            <td class='text-center'>".$row->nama_jurusan."</td>
                             <td class='text-center'>".$row->nama_mapel."</td>
                             <td class='text-center'>".$row->hari."</td>
                             <td class='text-center'>".$row->jam."</td>
                             <td class='text-center'>".$row->nama_ruangan."</td>
-                            <td class='text-center'>".anchor('nilai/rombel/'.$row->id_rombel, '<div class="btn btn-xs btn-flat btn-info"><i class="fa fa-eye"></i></div>')."</td>
+                            <td class='text-center'>".anchor('nilai/rombel/'.$row->id_jadwal, '<div class="btn btn-xs btn-flat btn-info"><i class="fa fa-eye"></i></div>')."</td>
                         </tr>";
                     }
                 ?>

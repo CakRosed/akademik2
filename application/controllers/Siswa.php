@@ -47,7 +47,7 @@
 				'title' => 'DATA SISWA',
 				'parent'=> 'SISWA',
 				'child' => 'EDIT',
-				'siswa' => $this->model->get_data('*', 'tbl_siswa', 'nis='.$nis)->row_object()
+				'siswa' => $this->db->get_where('tbl_siswa', array('nis' => $nis))->row_object()
 			);
 			if (isset($_POST['submit'])) {
 				$nis 	= strip_tags(trim($this->input->post('nis')));
@@ -56,87 +56,8 @@
 				$this->smodel->edit($foto);	
 			}
 			$this->template->load('template', 'siswa/edit', $data);
-		}
+		} //end edit
 
-		// start edit
-		// public function edit(){
-		// 	$nisn 	= $this->uri->segment(3);
-			
-		// 	$data = array(
-		// 		'icon'  => 'fa fa-users',
-		// 		'title' => 'INPUT SISWA',
-		// 		'parent'=> 'SISWA',
-		// 		'child' => 'EDIT',
-		// 		'siswa' => $this->model->get_data('*', 'tbl_siswa', 'nisn='.$nisn)->row()  
-		// 	);
-
-		// 	if (isset($_POST['submit'])) {
-		// 		$nisn= strip_tags(trim($this->input->post('nisn', TRUE)));
-		// 		$foto = $this->model->get_data('foto', 'tbl_siswa', 'nisn='.$nisn)->row('foto');
-
-		// 		// konfigurasi upload foto
-		// 		$config['upload_path']          = './upload/siswa';
-		// 		$config['allowed_types']        = 'jpg|jpeg|png';
-		// 		$config['max_size']             = 1024;
-		// 		$config['file_name']			= $nisn;
-		// 		$config['overwrite']			= TRUE;
-		// 		$this->load->library('upload', $config);
-
-
-		// 		// proses upload
-		// 		$uploaded = $this->upload->do_upload('userfile');
-		// 		$upload = $this->upload->data();
-		// 		if ($uploaded){
-		// 			$fotodb = $nisn.$upload['file_ext'];
-		// 		}else{
-		// 			$fotodb = $foto; 
-		// 		}
-
-		// 		// tangkap data
-
-		// 		$param = array(
-		// 			'nama'			=> strip_tags(trim($this->input->post('nama', TRUE))),
-		// 			'tempat_lahir' 	=> strip_tags(trim(strtoupper($this->input->post('tempat_lahir', TRUE)))),
-		// 			'tanggal_lahir'	=> strip_tags(trim($this->input->post('tanggal_lahir', TRUE))),
-		// 			'nama_wali'		=> strip_tags(trim(strtoupper($this->input->post('nama_wali', TRUE)))),
-		// 			'hp_wali'		=> strip_tags(trim($this->input->post('hp_wali', TRUE))),
-		// 			'gender' 		=> $this->input->post('gender', TRUE),
-		// 			'kd_agama' 		=> $this->input->post('agama', TRUE),
-		// 			'alamat' 		=> strip_tags(trim($this->input->post('alamat', TRUE))),
-		// 			'id_rombel'		=> $this->input->post('rombel'),
-		// 			'foto'			=> $fotodb
-		// 		);
-
-		// 		$id_tahun_akademik = $this->model->get_data('*', 'tbl_tahun_akademik', array('is_aktif'=>'y'))->row_object();
-		// 		$chek   = $this->model->get_data('id_tahun_akademik, id_rombel', 'tbl_history_kelas', 'id_tahun_akademik='.$id_tahun_akademik->kd_tahun_akademik.' and id_rombel='.$param["id_rombel"]);
-		// 		$param2 = array(
-		// 			'nisn'				=> strip_tags(trim($this->input->post('nisn', TRUE))),
-		// 			'id_rombel'			=> strip_tags(trim($this->input->post('rombel', TRUE))),
-		// 			'id_tahun_akademik'	=> $id_tahun_akademik->kd_tahun_akademik
-		// 		);
-		// 		if ($chek->num_rows()>0) {
-		// 			$backup = $this->db->update('tbl_history_kelas', array('id_rombel'=>$param['id_rombel']));	
-		// 			// echo "backup update";die;
-		// 		}else{
-		// 			$backup = $this->db->insert('tbl_history_kelas', $param2);
-		// 			// echo "backup insert";die;
-		// 		}
-		// 		//masalah terletak pda nis dan nisn yang tidak muncul  
-		// 		// print_r($param);
-		// 		// die;
-		// 		$update = $this->model->update_data($nisn, 'nisn', $param, 'tbl_siswa');
-		// 		$getBack= $this->model->get_data('kd_rombel, kd_jurusan', 'tbl_rombel', 'kd_rombel='.$param['id_rombel'])->row_object();	
-		// 		if ($update && $backup) {
-		// 			echo "<script>alert('Sukses Mengubah Data');</script>";
-		// 			redirect('siswa/siswa_aktif/'.$getBack->kd_rombel.'/'.$getBack->kd_jurusan);
-		// 		}else{
-		// 			echo "<script>alert('Gagal Mengubah Data!');</script>";
-		// 		}
-		// 	}
-
-		// 	$this->template->load('template', 'siswa/edit', $data);
-		// }
-		// end edit
 
 		function delete(){
 			$nisn = $this->uri->segment(3);
@@ -166,20 +87,24 @@
 		// end profile
 
 		function siswa_aktif(){
+			$info_sekolah = "SELECT js.jumlah_kelas
+                        FROM tbl_jenjang_sekolah as js, tbl_sekolah_info as si
+						WHERE js.kd_jenjang = si.kd_jenjang_sekolah";
+						
 			$data = array(
 				'icon'  => 'fa fa-users',
 				'title' => 'LIST SISWA',
 				'parent'=> 'SISWA',
-				'child' => 'AKTIF' 
+				'child' => 'AKTIF',
+				'info'	=> $this->db->query($info_sekolah)->row()  
 			);
 			$this->template->load('template', 'siswa/siswa_aktif', $data);
 		}
 
 		function showRombel(){
-			$jurusan = strip_tags(trim($this->input->get('jurusan')));
-			$selected = strip_tags(trim($this->input->get('rombel')));
-			// $selected = strip_tags(trim($this->uri->segment(3)));
-			$rombel = $this->model->get_data('*', 'tbl_rombel', 'kd_jurusan="'.$jurusan.'"');
+			$kelas 		= strip_tags(trim($this->input->get('kelas')));
+			$selected 	= strip_tags(trim($this->input->get('rombel')));
+			$rombel = $this->db->get_where('tbl_rombel', array('kelas' => $kelas));
 			echo "<select class='form-control' id='rombel' name='rombel' onchange='loadData()'>";
 			foreach ($rombel->result() as $row) {
 				if ($row->kd_rombel==$selected) {
