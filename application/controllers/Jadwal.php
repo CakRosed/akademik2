@@ -8,7 +8,7 @@
 
         function index(){
             if($this->session->userdata('id_level_user')==3){
-                $sql = "SELECT tj.id_jadwal,tjr.nama_jurusan,tj.kelas,tm.nama_mapel,tj.jam,tr.nama_ruangan,tj.hari,tj.semester 
+                $sql = "SELECT tj.id_jadwal,tj.kelas,tm.nama_mapel,tj.jam,tr.nama_ruangan,tj.hari,tj.semester 
                         FROM tbl_jadwal as tj, tbl_ruangan as tr, tbl_mapel as tm 
                         WHERE tj.kd_mapel=tm.kd_mapel and tj.kd_ruangan=tr.kd_ruangan and tj.id_guru=".$this->session->userdata('id_guru'); 
                 

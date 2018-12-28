@@ -233,7 +233,7 @@
                     'value'       => set_value('alamat')
                     )); 
                   ?>
-               </div>
+              </div>
                 <!-- /.input group -->
               </div>
               <!-- /.form group -->

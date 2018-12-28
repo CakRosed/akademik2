@@ -1,5 +1,3 @@
-
-
 <!-- SELECT2 EXAMPLE -->
       <div class="box box-success">
         <div class="box-header with-border">
@@ -16,11 +14,11 @@
           <div class="row">
             <div class="col-md-6">
             
-             <?php 
+              <?php 
                 echo form_open_multipart('sekolah', 'role="from"');
                 echo form_hidden('kd_sekolah', $sekolah->kd_sekolah);
-               ?> 
-               
+              ?> 
+                
                 <!-- nisn -->
                 <div class="form-group">
                   <label>NAMA SEKOLAH</label>

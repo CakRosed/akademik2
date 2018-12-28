@@ -4,17 +4,6 @@
       <!-- /.box-header -->
       <div class="box-body">
         <?php echo form_open('siswa/exportExcel'); ?>
-        <?php
-          $rombel = $this->uri->segment(3);
-          $jurusan= $this->uri->segment(4);
-          if (!empty($rombel) && !empty($jurusan)) {
-            $kd_rombel = $rombel;
-            $kd_jurusan= $jurusan; 
-          }else{
-            $kd_rombel = null; 
-            $kd_jurusan= null;
-          }
-        ?>
         <table class="table table-bordered" style="width:100%">
           <tr>
             <td>KELAS</td>

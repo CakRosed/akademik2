@@ -2,8 +2,8 @@
  Class Mapel extends CI_Controller{
  	function __construct(){
 		parent:: __construct();
+		check_akses_modul();
 		$this->load->model('Model_global', 'model');
-			check_akses_modul();
 		} // end function __construct
 
 
@@ -70,12 +70,12 @@
                 );
 
             $update = $this->model->update_data($kd_mapel, 'kd_mapel', $param, 'tbl_mapel');
-    	   if ($update) {
-                echo "<scipt>alert('Sukses Mendaftar Mata Pelajaran');</script>";
-                redirect('mapel');
-           }else{
-                echo "<script>alert('Gagal Mendaftar Mata Kuliah!');</script>";
-           }
+			if ($update) {
+					echo "<scipt>alert('Sukses Mendaftar Mata Pelajaran');</script>";
+					redirect('mapel');
+			}else{
+					echo "<script>alert('Gagal Mendaftar Mata Kuliah!');</script>";
+			}
         } // end if post
 
     	$this->template->load('template', 'mapel/edit', $data);

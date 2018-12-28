@@ -19,7 +19,7 @@
               <?php 
                 echo form_open_multipart('mapel/edit', 'role="from"');
                 echo form_hidden('kd_mapel', $mapel->kd_mapel);
-               ?>
+              ?>
 
                 <!-- nisn -->
                 <div class="form-group">

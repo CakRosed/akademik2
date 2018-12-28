@@ -11,10 +11,6 @@
                     <td><?php echo get_tahun_akademik_aktif('semester_aktif'); ?></td>
                 </tr>
                 <tr>
-                    <td>JURUSAN</td>
-                    <td><?php echo $info->nama_jurusan." KELAS ".$info->kelas. " (".$info->nama_rombel.")"; ?></td>
-                </tr>
-                <tr>
                     <td>MATA PELAJARAN</td>
                     <td><?php echo $info->nama_mapel; ?></td>
                 </tr>
@@ -64,7 +60,6 @@
             url    : '<?php echo base_url("nilai/update") ?>',
             data   : 'nisn='+nisn+'&id_jadwal='+<?php echo $this->uri->segment(3) ?>+'&nilai='+nilai,
             success:function(html){
-
             }
         });
     }

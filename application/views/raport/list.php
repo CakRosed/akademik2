@@ -10,10 +10,6 @@
                     <td>SEMESTER</td>
                     <td><?php echo get_tahun_akademik_aktif('semester_aktif'); ?></td>
                 </tr>
-                <tr>
-                    <td>JURUSAN</td>
-                    <td><?php echo $info->nama_jurusan." KELAS ".$info->kelas. " (".$info->nama_rombel.")"; ?></td>
-                </tr>
             </table>
         </div>    
     </div> 

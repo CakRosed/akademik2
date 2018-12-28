@@ -3,14 +3,15 @@ Class Raport extends CI_Controller{
 
     function __consrtuct(){
         parent::__construct();
+        check_akses_modul();
         $this->load->model('Model_raport', 'model');
     }
 
     function index(){
         $walikelas = $this->db->get_where('tbl_walikelas', array('id_guru' => $this->session->userdata('id_guru')))->row_array();
-        $rombel     =  "SELECT tr.nama_rombel, tjr.nama_jurusan, tr.kelas, tm.nama_mapel
-                        FROM tbl_jadwal as tja, tbl_jurusan as tjr, tbl_mapel as tm, tbl_rombel as tr 
-                        WHERE tja.kd_jurusan=tjr.kd_jurusan and tja.kd_mapel=tm.kd_mapel and tja.id_rombel=tr.kd_rombel and tja.id_rombel=".$walikelas['id_rombel'];
+        $rombel     =  "SELECT tr.nama_rombel, tr.kelas, tm.nama_mapel
+                        FROM tbl_jadwal as tja, tbl_mapel as tm, tbl_rombel as tr 
+                        WHERE tja.kd_mapel=tm.kd_mapel and tja.id_rombel=tr.kd_rombel and tja.id_rombel=".$walikelas['id_rombel'];
         $siswa	    =  "SELECT ts.nis, ts.nisn, ts.nama
                         FROM tbl_history_kelas as th, tbl_siswa as ts
                         WHERE th.nisn=ts.nisn and th.id_rombel=".$walikelas['id_rombel']." and th.id_tahun_akademik=".get_tahun_akademik_aktif('kd_tahun_akademik');
@@ -29,9 +30,9 @@ Class Raport extends CI_Controller{
 
     function nilai_semester(){
         $nisn   =  $this->uri->segment(3);
-        $sql    =  "SELECT ts.nama, ts.nis, ts.nisn, tj.nama_jurusan, tr.nama_rombel
-                    FROM tbl_history_kelas as th, tbl_siswa as ts, tbl_rombel as tr, tbl_jurusan as tj
-                    WHERE th.nisn=ts.nisn and ts.id_rombel=tr.kd_rombel and tr.kd_jurusan=tj.kd_jurusan and th.nisn=".$nisn." and th.id_tahun_akademik=".get_tahun_akademik_aktif('kd_tahun_akademik');
+        $sql    =  "SELECT ts.nama, ts.nis, ts.nisn, tr.nama_rombel
+                    FROM tbl_history_kelas as th, tbl_siswa as ts, tbl_rombel as tr
+                    WHERE th.nisn=ts.nisn and ts.id_rombel=tr.kd_rombel and th.nisn=".$nisn." and th.id_tahun_akademik=".get_tahun_akademik_aktif('kd_tahun_akademik');
         $siswa  = $this->db->query($sql)->row_object();
 
         $this->load->model('Model_raport', 'model');
@@ -50,8 +51,6 @@ Class Raport extends CI_Controller{
             $pdf->Cell(30, 5, 'TAHUN AJARAN', 0, 0, 'L');
             $pdf->Cell(45, 5, ': '.get_tahun_akademik_aktif('tahun_akademik'), 0, 1, 'L');
             
-            $pdf->Cell(30, 5, 'JURUSAN', 0, 0, 'L');
-            $pdf->Cell(88, 5, ': '.$siswa->nama_jurusan, 0, 0, 'L');
             $pdf->Cell(30, 5, 'SEMESTER', 0, 0, 'L');
             $pdf->Cell(45, 5, ': '.get_tahun_akademik_aktif('semester_aktif'), 0, 1, 'L');
             

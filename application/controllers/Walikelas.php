@@ -68,15 +68,11 @@ Class Walikelas extends CI_Controller{
     } //end delete
 
     function add(){
-        $info_sekolah = "SELECT js.jumlah_kelas
-                        FROM tbl_jenjang_sekolah as js, tbl_sekolah_info as si
-                        WHERE js.kd_jenjang = si.kd_jenjang_sekolah";
         $data = array(
             'icon'          => 'fa fa-search',
             'title'         => 'DETAIL WALIKELAS',
             'parent'        => 'WALIKELAS',
             'child'         => 'PENGATURAN',
-            'info'          => $this->db->query($info_sekolah)->row()
         );
         
         if (isset($_POST['submit'])) {
@@ -84,6 +80,26 @@ Class Walikelas extends CI_Controller{
         }
         $this->template->load('template', 'walikelas/add', $data);
     }// end add
+
+    function edit(){
+        $id_walikelas = strip_tags(trim($this->uri->segment(3)));
+        $sql = "SELECT  tw.*, tr.kelas
+                FROM tbl_rombel as tr, tbl_walikelas as tw
+                WHERE tw.id_rombel=tr.kd_rombel and tw.id_walikelas=$id_walikelas";
+                
+        $data = array(
+            'icon'          => 'fa fa-search',
+            'title'         => 'DETAIL WALIKELAS',
+            'parent'        => 'WALIKELAS',
+            'child'         => 'PENGATURAN',
+            'walikelas'     => $this->db->query($sql)->row() 
+        );
+        $this->template->load('template', 'walikelas/edit', $data);
+    } //end edit
+
+    function update(){
+        $this->model->update();
+    } //end update
 
     function showRombel(){
         $kelas	= strip_tags(trim($this->input->get('kelas')));

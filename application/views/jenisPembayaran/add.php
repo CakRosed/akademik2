@@ -3,7 +3,7 @@
 <!-- SELECT2 EXAMPLE -->
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">INPUT DATA MAPEL</h3>
+          <h3 class="box-title">INPUT DATA JENIS PEMBAYARAN</h3>
 
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -17,12 +17,12 @@
             <div class="col-md-6">
             
               <?php 
-                echo form_open_multipart('mapel/add', 'role="from"');
+                echo form_open_multipart('jenis_pembayaran/add', 'role="from"');
               ?>
 
                 <!-- nisn -->
                 <div class="form-group">
-                  <label>KODE MATA PELAJARAN</label>
+                  <label>NAMA JENIS PEMBAYARAN</label>
 
                   <div class="input-group">
                     <div class="input-group-addon">
@@ -30,41 +30,18 @@
                     </div>
                     <?php echo form_input(array(
                       'type'          =>'text', 
-                      'placeholder'   =>'ex. BIND11081', 
-                      'name'          =>'kd_mapel', 
-                      'id'            =>'kd_mapel', 
+                      'placeholder'   =>'ex. SPP', 
+                      'name'          =>'nama_jenis', 
+                      'id'            =>'nama_jeniss', 
                       'class'         =>'form-control', 
                       'required'      =>'required', 
-                      'value'         => set_value('kd_mapel') 
+                      'value'         => set_value('nama_jeniss') 
                       )); 
                     ?>
                   </div>
                   <!-- /.input group -->
                 </div>
                 <!-- /.form group -->
-
-              <!-- nama  -->
-              <div class="form-group">
-                <label>NAMA MATA PELAJARAN</label>
-
-                <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-book"></i>
-                  </div>
-                  <?php echo form_input(array(
-                    'type'        =>'text', 
-                    'placeholder' =>'ex. BAHASA INDONESIA', 
-                    'name'        =>'nama_mapel', 
-                    'id'          =>'nama_mapel', 
-                    'class'       =>'form-control', 
-                    'required'    =>'required', 
-                    'value'       => set_value('nama_mapel') 
-                    )); 
-                  ?>  
-                </div>
-                <!-- /.input group -->
-              </div>
-              <!-- /.form group -->
 
               <!-- /.col -->
               <div class="col-md-6"><br>
@@ -80,7 +57,7 @@
 
               <?php echo form_close(); ?>
 
-                <a href="<?php echo base_url('mapel'); ?>" type="button" class="btn btn-block btn-warning btn-flat">BATAL</a>
+                <a href="<?php echo base_url('jenis_pembayaran'); ?>" type="button" class="btn btn-block btn-warning btn-flat">BATAL</a>
               </div>
             </div>
             <!-- /.row -->

@@ -12,18 +12,17 @@
   <div class="box-body">
     <div class="row">
       <div class="col-md-6">
-        <?php echo form_open_multipart('walikelas/add', 'role="from"');?> 
-
-        <!-- kelas -->
-        <div class="form-group">
-          <label>KELAS</label>
+        <?php echo form_open_multipart('walikelas/update', 'role="from"');?> 
+        <?php echo form_hidden('id_walikelas', $walikelas->id_walikelas);?>
+        <div class="form-group"> 
+          <label>KELAS</label> 
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-id-card-o"></i>
             </div>
-            <?php cmb_kelas('loadRombel()'); ?>
+            <?php cmb_kelas('loadRombel()', $walikelas->kelas); ?>
           </div>
-          <!-- /.input group -->
+          <!-- /.input group --> 
         </div>
         <!-- /.form group -->
         
@@ -52,7 +51,7 @@
             <div class="input-group-addon">
               <i class="fa fa-book"></i>
             </div>
-            <?php echo cmb_dinamis('guru', 'tbl_guru', 'nama_guru', 'nuptk', null, 'form-control'); 
+            <?php echo cmb_dinamis('guru', 'tbl_guru', 'nama_guru', 'nuptk', $walikelas->id_guru, 'form-control'); 
             ?> 
           </div>
           <!-- /.input group -->
@@ -66,7 +65,7 @@
               'type'=>'submit', 
               'name'=>'submit',  
               'class'=>'btn btn-block btn-success btn-flat',
-              'value'=> 'DAFTAR' 
+              'value'=> 'UPDATE' 
               )); 
             ?>
             <?php echo form_close(); ?>

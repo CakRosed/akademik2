@@ -92,7 +92,7 @@
 				</tr>
 			</thead>
 			<tbody>";
-			if ($level == 1) {
+			if ($level == 10) {
 				echo "<td class='text-center' colspan=4>ADMIN MEMPUNYAI HAK AKSES SEMUA MODUL</td>";
 			}else{
 				$modul = $this->db->get('tabel_menu');
