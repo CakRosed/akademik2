@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-10">
-    <div class="box">
+    <div class="box box-success">
       <!-- /.box-header -->
       <div class="box-body">
         <?php echo form_open('jadwal/cetak_jadwal'); ?>
@@ -23,7 +23,7 @@
           </tr>
           <tr>
             <td colspan="2">
-              <button target="blank" class="btn btn-danger  btn-sm" name="export_jadwal"  type="submit"><i class="fa fa-print"> Cetak Jadwal</i></button>
+              <button target="blank" class="btn btn-flat btn-success  btn-sm" name="export_jadwal"  type="submit"><i class="fa fa-print"> Cetak Jadwal</i></button>
             </td>
           </tr>
         </form>
@@ -33,27 +33,26 @@
   </div> <!-- end col -->
 
   <div class="col-md-2">
-    <div class="box">
-      <div style="margin-left:5px; padding-bottom:45px; padding-top:25px;" class="box-body">
+    <div class="box box-danger">
+      <div style="margin-left:5px; padding-bottom:19px; padding-top:19px;" class="box-body">
         <!-- Button trigger modal -->
         <div style="margin-left:15px; margin-bottom:15px;">
           <i class="fa fa-cogs fa-5x"></i><br>
         </div>
-        <button class="btn btn-primary btn-sm btn-flat" data-toggle="modal" data-target="#myModal">
+        <button class="btn btn-block btn-primary btn-sm btn-flat" data-toggle="modal" data-target="#myModal">
           Generate Jadwal
         </button>
-        <br><br>
-        <div style="margin-left:8px;">
-          <a href="<?php echo base_url('jadwal/ressetJadwal'); ?>" class="btn btn-danger btn-flat btn-sm">
+        
+          <a href="<?php echo base_url('jadwal/ressetJadwal'); ?>" class="btn btn-danger btn-flat btn-block btn-sm">
             Resset Jadwal
           </a>
-        </div>  
+        
       </div>
     </div>
   </div>
 
   <div class="col-md-12">
-    <div class="box">
+    <div class="box box-danger">
       <!-- /.box-header -->
       <div class="box-body">
         <div id="tabel"></div>
